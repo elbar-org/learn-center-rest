@@ -7,4 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class LanguageCriteria extends GenericCriteria {
+    public LanguageCriteria(Integer size, Integer page) {
+        super(size, page);
+    }
 }

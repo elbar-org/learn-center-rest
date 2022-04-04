@@ -10,7 +10,8 @@ import elbar.company.learn_center_rest.mapper.auth.language.LanguageMapper;
 import elbar.company.learn_center_rest.repository.auth.language.LanguageRepository;
 import elbar.company.learn_center_rest.response.Data;
 import elbar.company.learn_center_rest.service.AbstractService;
-import elbar.company.learn_center_rest.validator.auth.language.LanguageValidator;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,7 @@ import java.util.UUID;
 
 @Service
 @Transactional
-public class LanguageServiceImpl extends AbstractService<LanguageValidator, LanguageMapper, LanguageRepository> implements LanguageService {
+public class LanguageServiceImpl extends AbstractService<LanguageMapper, LanguageRepository> implements LanguageService {
 
     public LanguageServiceImpl(LanguageValidator validator, LanguageMapper mapper, LanguageRepository repository) {
         super(validator, mapper, repository);
@@ -38,7 +39,7 @@ public class LanguageServiceImpl extends AbstractService<LanguageValidator, Lang
     public ResponseEntity<Data<Void>> update(LanguageUpdateDTO DTO) {
         Language language = repository.getByCode(DTO.getCode());
         language.setName(DTO.getName());
-        language.setPublished(DTO.getIs_published());
+        language.setPublished(DTO.getIsPublished());
         language.setUpdatedAt(LocalDateTime.now());
         repository.save(language);
         return new ResponseEntity<>(new Data<>(true), HttpStatus.OK);
@@ -57,12 +58,20 @@ public class LanguageServiceImpl extends AbstractService<LanguageValidator, Lang
 
     @Override
     public ResponseEntity<Data<LanguageDetailDTO>> detail(UUID key) {
-        return null;
+        return new ResponseEntity<>(new Data<>(mapper.fromDetailDTO(repository.getByCode(key))), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<List<LanguageGetDTO>>> list(LanguageCriteria criteria) {
         List<Language> all = repository.findAll();
         return new ResponseEntity<>(new Data<>(mapper.fromGetListDTO(all), all.size()), HttpStatus.OK);
+    public ResponseEntity<Data<List<LanguageGetDTO>>> list() {
+        return null;
+    }
+
+    public ResponseEntity<Data<List<LanguageGetDTO>>> list(LanguageCriteria criteria) {
+        PageRequest request = PageRequest.of(criteria.getPage(), criteria.getSize());
+        Page<Language> all = repository.findAll(request);
+        return new ResponseEntity<>(new Data<>(mapper.fromGetListDTO(all.toList()), all.getSize()), HttpStatus.OK);
     }
 }

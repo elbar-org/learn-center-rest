@@ -1,9 +1,10 @@
-package elbar.company.learn_center_rest.dto.auth.language;
+package elbar.company.learn_center_rest.dto.auth.status;
 
 import com.google.gson.annotations.SerializedName;
 import elbar.company.learn_center_rest.dto.GenericDTO;
 import lombok.*;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
@@ -12,11 +13,12 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class LanguageUpdateDTO extends GenericDTO {
-    @Min(value = 2, message = "{auth.language.min.size}")
-    @NotBlank(message = "{auth.language.name.required}")
+public class StatusUpdateDTO extends GenericDTO {
+    @Min(value = 3, message = "{status.min.size}")
+    @Max(value = 30, message = "{status.max.size}")
+    @NotBlank(message = "{auth.status.name.required}")
     private String name;
-    @NotBlank(message = "{auth.language.is_published.required}")
     @SerializedName(value = "is_published")
+    @NotBlank(message = "{auth.status.is_published.required}")
     private Boolean isPublished;
 }
