@@ -1,5 +1,6 @@
 package elbar.company.learn_center_rest.service.auth.language;
 
+import elbar.company.learn_center_rest.criteria.auth.language.LanguageCriteria;
 import elbar.company.learn_center_rest.dto.auth.language.LanguageCreateDTO;
 import elbar.company.learn_center_rest.dto.auth.language.LanguageDetailDTO;
 import elbar.company.learn_center_rest.dto.auth.language.LanguageGetDTO;
@@ -9,6 +10,8 @@ import elbar.company.learn_center_rest.mapper.auth.language.LanguageMapper;
 import elbar.company.learn_center_rest.repository.auth.language.LanguageRepository;
 import elbar.company.learn_center_rest.response.Data;
 import elbar.company.learn_center_rest.service.AbstractService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -53,12 +56,17 @@ public class LanguageServiceImpl extends AbstractService<LanguageMapper, Languag
 
     @Override
     public ResponseEntity<Data<LanguageDetailDTO>> detail(UUID key) {
-        return null;
+        return new ResponseEntity<>(new Data<>(mapper.fromDetailDTO(repository.getByCode(key))), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<List<LanguageGetDTO>>> list() {
-        List<Language> all = repository.findAll();
-        return new ResponseEntity<>(new Data<>(mapper.fromGetListDTO(all), all.size()), HttpStatus.OK);
+        return null;
+    }
+
+    public ResponseEntity<Data<List<LanguageGetDTO>>> list(LanguageCriteria criteria) {
+        PageRequest request = PageRequest.of(criteria.getPage(), criteria.getSize());
+        Page<Language> all = repository.findAll(request);
+        return new ResponseEntity<>(new Data<>(mapper.fromGetListDTO(all.toList()), all.getSize()), HttpStatus.OK);
     }
 }
