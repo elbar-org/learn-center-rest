@@ -21,7 +21,7 @@ import java.util.*;
 public class CustomAuthorizationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if (request.getServletPath().equals("/api/v1/auth/login")) {
+        if (request.getServletPath().equals("/api/v1/login")) {
             try {
                 filterChain.doFilter(request, response);
             } catch (Exception e) {

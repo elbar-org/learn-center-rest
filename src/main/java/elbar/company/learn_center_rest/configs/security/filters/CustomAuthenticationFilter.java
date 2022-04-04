@@ -35,7 +35,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     public CustomAuthenticationFilter(AuthTokenService authTokenService, AuthenticationManager authenticationManager) {
         this.authTokenService = authTokenService;
         this.authenticationManager = authenticationManager;
-        super.setFilterProcessesUrl("/api/v1/auth/login");
+        super.setFilterProcessesUrl("/api/v1/login");
     }
 
     @Override

@@ -24,6 +24,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     public static final String[] WHITE_LIST = {
             "/swagger-ui/**",
             "/swagger-documentation/**",
+            BaseUtils.PATH + "/login",
             BaseUtils.PATH + "/auth/login",
             BaseUtils.PATH + "/auth/register"
     };
