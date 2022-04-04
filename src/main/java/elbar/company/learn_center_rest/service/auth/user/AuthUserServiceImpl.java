@@ -1,7 +1,7 @@
 package elbar.company.learn_center_rest.service.auth.user;
 
 import elbar.company.learn_center_rest.configs.encryption.PasswordEncoderConfigurer;
-import elbar.company.learn_center_rest.criteria.auth.auth.AuthUserCriteria;
+import elbar.company.learn_center_rest.criteria.auth.user.AuthUserCriteria;
 import elbar.company.learn_center_rest.dto.auth.user.AuthUserCreateDTO;
 import elbar.company.learn_center_rest.dto.auth.user.AuthUserDetailDTO;
 import elbar.company.learn_center_rest.dto.auth.user.AuthUserGetDTO;
@@ -12,7 +12,7 @@ import elbar.company.learn_center_rest.mapper.auth.user.AuthUserMapper;
 import elbar.company.learn_center_rest.repository.auth.user.AuthUserRepository;
 import elbar.company.learn_center_rest.response.Data;
 import elbar.company.learn_center_rest.service.AbstractService;
-import elbar.company.learn_center_rest.validator.auth.auth.AuthUserValidator;
+import elbar.company.learn_center_rest.validator.auth.user.AuthUserValidator;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;

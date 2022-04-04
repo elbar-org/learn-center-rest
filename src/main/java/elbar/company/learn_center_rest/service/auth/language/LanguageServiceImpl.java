@@ -10,6 +10,7 @@ import elbar.company.learn_center_rest.mapper.auth.language.LanguageMapper;
 import elbar.company.learn_center_rest.repository.auth.language.LanguageRepository;
 import elbar.company.learn_center_rest.response.Data;
 import elbar.company.learn_center_rest.service.AbstractService;
+import elbar.company.learn_center_rest.validator.auth.language.LanguageValidator;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,7 @@ import java.util.UUID;
 
 @Service
 @Transactional
-public class LanguageServiceImpl extends AbstractService<LanguageMapper, LanguageRepository> implements LanguageService {
+public class LanguageServiceImpl extends AbstractService<LanguageValidator, LanguageMapper, LanguageRepository> implements LanguageService {
 
     public LanguageServiceImpl(LanguageValidator validator, LanguageMapper mapper, LanguageRepository repository) {
         super(validator, mapper, repository);
@@ -62,13 +63,6 @@ public class LanguageServiceImpl extends AbstractService<LanguageMapper, Languag
     }
 
     @Override
-    public ResponseEntity<Data<List<LanguageGetDTO>>> list(LanguageCriteria criteria) {
-        List<Language> all = repository.findAll();
-        return new ResponseEntity<>(new Data<>(mapper.fromGetListDTO(all), all.size()), HttpStatus.OK);
-    public ResponseEntity<Data<List<LanguageGetDTO>>> list() {
-        return null;
-    }
-
     public ResponseEntity<Data<List<LanguageGetDTO>>> list(LanguageCriteria criteria) {
         PageRequest request = PageRequest.of(criteria.getPage(), criteria.getSize());
         Page<Language> all = repository.findAll(request);

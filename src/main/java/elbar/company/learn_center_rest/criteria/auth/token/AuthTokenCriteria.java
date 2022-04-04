@@ -7,4 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AuthTokenCriteria extends GenericCriteria {
+    public AuthTokenCriteria(Integer size, Integer page) {
+        super(size, page);
+    }
 }

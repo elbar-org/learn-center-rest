@@ -5,12 +5,12 @@ import elbar.company.learn_center_rest.dto.auth.status.StatusCreateDTO;
 import elbar.company.learn_center_rest.dto.auth.status.StatusDetailDTO;
 import elbar.company.learn_center_rest.dto.auth.status.StatusGetDTO;
 import elbar.company.learn_center_rest.dto.auth.status.StatusUpdateDTO;
-import elbar.company.learn_center_rest.entity.auth.language.Language;
 import elbar.company.learn_center_rest.entity.auth.status.Status;
 import elbar.company.learn_center_rest.mapper.auth.status.StatusMapper;
 import elbar.company.learn_center_rest.repository.auth.status.StatusRepository;
 import elbar.company.learn_center_rest.response.Data;
 import elbar.company.learn_center_rest.service.AbstractService;
+import elbar.company.learn_center_rest.validator.auth.status.StatusValidator;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -22,10 +22,9 @@ import java.util.UUID;
 
 @Service
 @Transactional
-public class StatusServiceImpl extends AbstractService<StatusMapper, StatusRepository> implements StatusService {
-
-    public StatusServiceImpl(StatusMapper mapper, StatusRepository repository) {
-        super(mapper, repository);
+public class StatusServiceImpl extends AbstractService<StatusValidator, StatusMapper, StatusRepository> implements StatusService {
+    public StatusServiceImpl(StatusValidator validator, StatusMapper mapper, StatusRepository repository) {
+        super(validator, mapper, repository);
     }
 
     @Override
@@ -61,10 +60,6 @@ public class StatusServiceImpl extends AbstractService<StatusMapper, StatusRepos
     }
 
     @Override
-    public ResponseEntity<Data<List<StatusGetDTO>>> list() {
-        return null;
-    }
-
     public ResponseEntity<Data<List<StatusGetDTO>>> list(StatusCriteria criteria) {
         return null;
     }

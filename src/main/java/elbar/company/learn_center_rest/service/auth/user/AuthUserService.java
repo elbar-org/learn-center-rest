@@ -1,6 +1,6 @@
 package elbar.company.learn_center_rest.service.auth.user;
 
-import elbar.company.learn_center_rest.criteria.auth.auth.AuthUserCriteria;
+import elbar.company.learn_center_rest.criteria.auth.user.AuthUserCriteria;
 import elbar.company.learn_center_rest.dto.auth.user.AuthUserCreateDTO;
 import elbar.company.learn_center_rest.dto.auth.user.AuthUserDetailDTO;
 import elbar.company.learn_center_rest.dto.auth.user.AuthUserGetDTO;

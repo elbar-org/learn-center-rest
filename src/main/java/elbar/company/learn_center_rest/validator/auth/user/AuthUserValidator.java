@@ -1,4 +1,4 @@
-package elbar.company.learn_center_rest.validator.auth.auth;
+package elbar.company.learn_center_rest.validator.auth.user;
 
 import elbar.company.learn_center_rest.dto.auth.user.AuthUserCreateDTO;
 import elbar.company.learn_center_rest.dto.auth.user.AuthUserUpdateDTO;

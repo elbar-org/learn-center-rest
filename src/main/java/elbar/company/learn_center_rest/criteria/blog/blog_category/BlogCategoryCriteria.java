@@ -7,4 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class BlogCategoryCriteria extends GenericCriteria {
+    public BlogCategoryCriteria(Integer size, Integer page) {
+        super(size, page);
+    }
 }
