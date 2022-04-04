@@ -3,10 +3,11 @@ package elbar.company.learn_center_rest.service.auth.token;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import elbar.company.learn_center_rest.criteria.auth.token.AuthTokenCriteria;
 import elbar.company.learn_center_rest.dto.auth.token.AuthTokenCreateDTO;
+import elbar.company.learn_center_rest.dto.auth.token.AuthTokenDetailDTO;
 import elbar.company.learn_center_rest.dto.auth.token.AuthTokenGetDTO;
 import elbar.company.learn_center_rest.dto.auth.token.AuthTokenUpdateDTO;
-import elbar.company.learn_center_rest.dto.auth.user.AuthUserDetailDTO;
 import elbar.company.learn_center_rest.entity.auth.user.AuthUser;
 import elbar.company.learn_center_rest.enums.auth.AuthTokenTypeEnum;
 import elbar.company.learn_center_rest.mapper.auth.token.AuthTokenMapper;
@@ -15,6 +16,7 @@ import elbar.company.learn_center_rest.repository.auth.user.AuthUserRepository;
 import elbar.company.learn_center_rest.response.Data;
 import elbar.company.learn_center_rest.service.AbstractService;
 import elbar.company.learn_center_rest.utils.jwt.JWTUtils;
+import elbar.company.learn_center_rest.validator.auth.token.AuthTokenValidator;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,11 +31,11 @@ import java.util.*;
 
 @Service
 @Transactional
-public class AuthTokenServiceImpl extends AbstractService<AuthTokenMapper, AuthTokenRepository> implements AuthTokenService {
+public class AuthTokenServiceImpl extends AbstractService<AuthTokenValidator, AuthTokenMapper, AuthTokenRepository> implements AuthTokenService {
     private final AuthUserRepository authUserRepository;
 
-    public AuthTokenServiceImpl(AuthTokenMapper mapper, AuthTokenRepository repository, AuthUserRepository authUserRepository) {
-        super(mapper, repository);
+    public AuthTokenServiceImpl(AuthTokenValidator validator, AuthTokenMapper mapper, AuthTokenRepository repository, AuthUserRepository authUserRepository) {
+        super(validator, mapper, repository);
         this.authUserRepository = authUserRepository;
     }
 
@@ -59,12 +61,12 @@ public class AuthTokenServiceImpl extends AbstractService<AuthTokenMapper, AuthT
     }
 
     @Override
-    public ResponseEntity<Data<AuthUserDetailDTO>> detail(UUID key) {
+    public ResponseEntity<Data<AuthTokenDetailDTO>> detail(UUID key) {
         return null;
     }
 
     @Override
-    public ResponseEntity<Data<List<AuthTokenGetDTO>>> list() {
+    public ResponseEntity<Data<List<AuthTokenGetDTO>>> list(AuthTokenCriteria criteria) {
         return null;
     }
 

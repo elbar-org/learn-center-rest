@@ -1,6 +1,7 @@
 package elbar.company.learn_center_rest.service.auth.user;
 
 import elbar.company.learn_center_rest.configs.encryption.PasswordEncoderConfigurer;
+import elbar.company.learn_center_rest.criteria.auth.auth.AuthUserCriteria;
 import elbar.company.learn_center_rest.dto.auth.user.AuthUserCreateDTO;
 import elbar.company.learn_center_rest.dto.auth.user.AuthUserDetailDTO;
 import elbar.company.learn_center_rest.dto.auth.user.AuthUserGetDTO;
@@ -11,6 +12,7 @@ import elbar.company.learn_center_rest.mapper.auth.user.AuthUserMapper;
 import elbar.company.learn_center_rest.repository.auth.user.AuthUserRepository;
 import elbar.company.learn_center_rest.response.Data;
 import elbar.company.learn_center_rest.service.AbstractService;
+import elbar.company.learn_center_rest.validator.auth.auth.AuthUserValidator;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -23,9 +25,9 @@ import java.util.UUID;
 
 @Service
 @Transactional
-public class AuthUserServiceImpl extends AbstractService<AuthUserMapper, AuthUserRepository> implements AuthUserService {
-    public AuthUserServiceImpl(AuthUserMapper mapper, AuthUserRepository repository) {
-        super(mapper, repository);
+public class AuthUserServiceImpl extends AbstractService<AuthUserValidator, AuthUserMapper, AuthUserRepository> implements AuthUserService {
+    public AuthUserServiceImpl(AuthUserValidator validator, AuthUserMapper mapper, AuthUserRepository repository) {
+        super(validator, mapper, repository);
     }
 
     @Override
@@ -58,7 +60,7 @@ public class AuthUserServiceImpl extends AbstractService<AuthUserMapper, AuthUse
     }
 
     @Override
-    public ResponseEntity<Data<List<AuthUserGetDTO>>> list() {
+    public ResponseEntity<Data<List<AuthUserGetDTO>>> list(AuthUserCriteria criteria) {
         return null;
     }
 

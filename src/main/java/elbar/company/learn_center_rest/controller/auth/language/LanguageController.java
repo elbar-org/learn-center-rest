@@ -1,6 +1,7 @@
 package elbar.company.learn_center_rest.controller.auth.language;
 
 import elbar.company.learn_center_rest.controller.AbstractController;
+import elbar.company.learn_center_rest.criteria.auth.language.LanguageCriteria;
 import elbar.company.learn_center_rest.dto.auth.language.LanguageCreateDTO;
 import elbar.company.learn_center_rest.dto.auth.language.LanguageGetDTO;
 import elbar.company.learn_center_rest.dto.auth.language.LanguageUpdateDTO;
@@ -43,6 +44,6 @@ public class LanguageController extends AbstractController<LanguageServiceImpl> 
 
     @RequestMapping(value = "list", method = RequestMethod.GET)
     public ResponseEntity<Data<List<LanguageGetDTO>>> getAll() {
-        return service.list();
+        return service.list(new LanguageCriteria());
     }
 }

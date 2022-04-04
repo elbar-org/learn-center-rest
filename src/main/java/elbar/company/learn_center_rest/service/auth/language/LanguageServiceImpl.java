@@ -1,5 +1,6 @@
 package elbar.company.learn_center_rest.service.auth.language;
 
+import elbar.company.learn_center_rest.criteria.auth.language.LanguageCriteria;
 import elbar.company.learn_center_rest.dto.auth.language.LanguageCreateDTO;
 import elbar.company.learn_center_rest.dto.auth.language.LanguageDetailDTO;
 import elbar.company.learn_center_rest.dto.auth.language.LanguageGetDTO;
@@ -9,19 +10,22 @@ import elbar.company.learn_center_rest.mapper.auth.language.LanguageMapper;
 import elbar.company.learn_center_rest.repository.auth.language.LanguageRepository;
 import elbar.company.learn_center_rest.response.Data;
 import elbar.company.learn_center_rest.service.AbstractService;
+import elbar.company.learn_center_rest.validator.auth.language.LanguageValidator;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
 @Service
-public class LanguageServiceImpl extends AbstractService<LanguageMapper, LanguageRepository> implements LanguageService {
+@Transactional
+public class LanguageServiceImpl extends AbstractService<LanguageValidator, LanguageMapper, LanguageRepository> implements LanguageService {
 
-    public LanguageServiceImpl(LanguageMapper mapper, LanguageRepository repository) {
-        super(mapper, repository);
+    public LanguageServiceImpl(LanguageValidator validator, LanguageMapper mapper, LanguageRepository repository) {
+        super(validator, mapper, repository);
     }
 
     @Override
@@ -57,7 +61,7 @@ public class LanguageServiceImpl extends AbstractService<LanguageMapper, Languag
     }
 
     @Override
-    public ResponseEntity<Data<List<LanguageGetDTO>>> list() {
+    public ResponseEntity<Data<List<LanguageGetDTO>>> list(LanguageCriteria criteria) {
         List<Language> all = repository.findAll();
         return new ResponseEntity<>(new Data<>(mapper.fromGetListDTO(all), all.size()), HttpStatus.OK);
     }
