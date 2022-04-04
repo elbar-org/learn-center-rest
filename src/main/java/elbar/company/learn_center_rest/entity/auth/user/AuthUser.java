@@ -25,7 +25,6 @@ public class AuthUser extends Auditable {
     @Column(name = "email", nullable = false, unique = true, length = 120)
     private String email;
 
-    @Lob
     @Column(name = "image", nullable = false)
     private String image;
 

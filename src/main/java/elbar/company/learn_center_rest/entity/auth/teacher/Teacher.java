@@ -25,7 +25,6 @@ public class Teacher extends Auditable {
     @Column(name = "age", nullable = false)
     private Integer age;
 
-    @Lob
     @Column(name = "about", nullable = false)
     private String about;
 }

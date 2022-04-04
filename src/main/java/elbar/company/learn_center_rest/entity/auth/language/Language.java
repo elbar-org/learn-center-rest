@@ -18,6 +18,6 @@ public class Language extends Auditable {
     @Column(name = "name", nullable = false, unique = true, length = 120)
     private String name;
 
-    @Column(name = "is_published")
+    @Column(name = "is_published", columnDefinition = "false")
     private boolean isPublished;
 }
