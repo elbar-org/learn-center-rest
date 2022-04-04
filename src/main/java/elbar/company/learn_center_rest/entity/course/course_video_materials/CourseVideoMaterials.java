@@ -5,7 +5,6 @@ import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Lob;
 import javax.persistence.Table;
 
 @Getter
@@ -19,7 +18,6 @@ public class CourseVideoMaterials extends Auditable {
     @Column(name = "video_id", nullable = false, updatable = false)
     private Integer videoId;
 
-    @Lob
-    @Column(name = "file", nullable = false, updatable = false)
+    @Column(name = "file", nullable = false, updatable = false, columnDefinition = "TEXT")
     private String file;
 }

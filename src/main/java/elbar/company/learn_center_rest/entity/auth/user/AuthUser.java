@@ -5,7 +5,6 @@ import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Lob;
 import javax.persistence.Table;
 
 @Getter
@@ -25,7 +24,7 @@ public class AuthUser extends Auditable {
     @Column(name = "email", nullable = false, unique = true, length = 120)
     private String email;
 
-    @Column(name = "image", nullable = false)
+    @Column(name = "image", nullable = false, columnDefinition = "TEXT")
     private String image;
 
     @Column(name = "language", nullable = false, length = 120)

@@ -5,7 +5,6 @@ import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Lob;
 import javax.persistence.Table;
 
 @Getter
@@ -25,6 +24,6 @@ public class Teacher extends Auditable {
     @Column(name = "age", nullable = false)
     private Integer age;
 
-    @Column(name = "about", nullable = false)
+    @Column(name = "about", nullable = false, columnDefinition = "TEXT")
     private String about;
 }

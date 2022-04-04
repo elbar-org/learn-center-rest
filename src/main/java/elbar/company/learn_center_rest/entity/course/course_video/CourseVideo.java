@@ -5,7 +5,6 @@ import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Lob;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
 
@@ -20,8 +19,7 @@ public class CourseVideo extends Auditable {
     @Column(name = "course_id", nullable = false)
     private Integer courseId;
 
-    @Lob
-    @Column(name = "video", nullable = false)
+    @Column(name = "video", nullable = false, columnDefinition = "TEXT")
     private String video;
 
     @Column(name = "time", nullable = false)

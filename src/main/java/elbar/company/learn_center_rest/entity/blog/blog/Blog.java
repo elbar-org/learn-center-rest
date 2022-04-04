@@ -5,7 +5,6 @@ import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Lob;
 import javax.persistence.Table;
 
 @Getter
@@ -22,12 +21,10 @@ public class Blog extends Auditable {
     @Column(name = "description", nullable = false, length = 300)
     private String description;
 
-    @Lob
-    @Column(name = "content", nullable = false)
+    @Column(name = "content", nullable = false, columnDefinition = "TEXT")
     private String content;
 
-    @Lob
-    @Column(name = "image", nullable = false)
+    @Column(name = "image", nullable = false, columnDefinition = "TEXT")
     private String image;
 
     @Column(name = "category_id", nullable = false)

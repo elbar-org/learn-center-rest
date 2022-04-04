@@ -5,7 +5,6 @@ import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Lob;
 import javax.persistence.Table;
 import java.util.Date;
 import java.util.UUID;
@@ -21,8 +20,7 @@ public class AuthToken extends Auditable {
     @Column(name = "user_code", nullable = false, updatable = false)
     private UUID userCode;
 
-    @Lob
-    @Column(name = "token", nullable = false, updatable = false)
+    @Column(name = "token", nullable = false, updatable = false, columnDefinition = "TEXT")
     private String token;
 
     @Column(name = "duration", nullable = false)
