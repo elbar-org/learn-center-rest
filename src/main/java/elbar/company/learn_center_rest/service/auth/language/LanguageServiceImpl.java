@@ -16,11 +16,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
 @Service
+@Transactional
 public class LanguageServiceImpl extends AbstractService<LanguageMapper, LanguageRepository> implements LanguageService {
 
     public LanguageServiceImpl(LanguageMapper mapper, LanguageRepository repository) {
@@ -37,7 +39,7 @@ public class LanguageServiceImpl extends AbstractService<LanguageMapper, Languag
     public ResponseEntity<Data<Void>> update(LanguageUpdateDTO DTO) {
         Language language = repository.getByCode(DTO.getCode());
         language.setName(DTO.getName());
-        language.setPublished(DTO.getIs_published());
+        language.setPublished(DTO.getIsPublished());
         language.setUpdatedAt(LocalDateTime.now());
         repository.save(language);
         return new ResponseEntity<>(new Data<>(true), HttpStatus.OK);

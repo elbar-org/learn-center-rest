@@ -19,6 +19,5 @@ public class LanguageCreateDTO implements BaseDTO {
     @NotBlank(message = "{auth.language.name.required}")
     private String name;
     @SerializedName(value = "is_published")
-    @NotBlank(message = "{auth.language.is_published.required}")
     private boolean isPublished;
 }
