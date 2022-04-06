@@ -10,9 +10,11 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @OpenAPIDefinition
 @SpringBootApplication
+@EnableTransactionManagement
 @EnableConfigurationProperties({
         OpenApiProperties.class,
         ServiceProperties.class
