@@ -9,38 +9,7 @@ import elbar.company.learn_center_rest.mapper.GenericMapper;
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 @Component
 @Mapper(componentModel = "spring")
 public interface LanguageMapper extends GenericMapper<LanguageCreateDTO, LanguageUpdateDTO, LanguageGetDTO, LanguageDetailDTO, Language> {
-    @Override
-    Language toCreateDTO(LanguageCreateDTO DTO);
-
-    @Override
-    LanguageCreateDTO fromCreateDTO(Language entity);
-
-    @Override
-    Language toUpdateDTO(LanguageUpdateDTO DTO);
-
-    @Override
-    LanguageUpdateDTO fromUpdateDTO(Language entity);
-
-    @Override
-    Language toGetDTO(LanguageGetDTO DTO);
-
-    @Override
-    LanguageGetDTO fromGetDTO(Language entity);
-
-    @Override
-    List<Language> toGetListDTO(List<LanguageGetDTO> DTO);
-
-    @Override
-    List<LanguageGetDTO> fromGetListDTO(List<Language> entity);
-
-    @Override
-    Language toDetailDTO(LanguageDetailDTO DTO);
-
-    @Override
-    LanguageDetailDTO fromDetailDTO(Language entity);
 }
