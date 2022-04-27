@@ -5,12 +5,15 @@ import elbar.company.learn_center_rest.dto.auth.teacher.TeacherCreateDTO;
 import elbar.company.learn_center_rest.dto.auth.teacher.TeacherDetailDTO;
 import elbar.company.learn_center_rest.dto.auth.teacher.TeacherGetDTO;
 import elbar.company.learn_center_rest.dto.auth.teacher.TeacherUpdateDTO;
+import elbar.company.learn_center_rest.entity.auth.role.Role;
 import elbar.company.learn_center_rest.entity.auth.teacher.Teacher;
 import elbar.company.learn_center_rest.mapper.auth.teacher.TeacherMapper;
 import elbar.company.learn_center_rest.repository.auth.teacher.TeacherRepository;
 import elbar.company.learn_center_rest.response.Data;
 import elbar.company.learn_center_rest.service.AbstractService;
 import elbar.company.learn_center_rest.validator.auth.teacher.TeacherValidator;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -62,6 +65,8 @@ public class TeacherServiceImpl extends AbstractService<TeacherValidator, Teache
 
     @Override
     public ResponseEntity<Data<List<TeacherGetDTO>>> list(TeacherCriteria criteria) {
-        return new ResponseEntity<>(new Data<>(mapper.fromGetListDTO(repository.findAll())), HttpStatus.OK);
+        PageRequest request = PageRequest.of(criteria.getPage(), criteria.getSize());
+        Page<Teacher> all = repository.findAll(request);
+        return new ResponseEntity<>(new Data<>(mapper.fromGetListDTO(all.toList()), all.getSize()), HttpStatus.OK);
     }
 }
