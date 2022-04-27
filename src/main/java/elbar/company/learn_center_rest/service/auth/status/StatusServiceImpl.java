@@ -61,6 +61,6 @@ public class StatusServiceImpl extends AbstractService<StatusValidator, StatusMa
 
     @Override
     public ResponseEntity<Data<List<StatusGetDTO>>> list(StatusCriteria criteria) {
-        return null;
+        return new ResponseEntity<>(new Data<>(mapper.fromGetListDTO(repository.findAll())), HttpStatus.OK);
     }
 }

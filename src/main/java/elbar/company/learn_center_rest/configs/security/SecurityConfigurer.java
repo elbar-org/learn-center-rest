@@ -26,6 +26,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
             "/swagger-documentation/**",
             BaseUtils.PATH + "/login",
             BaseUtils.PATH + "/auth/login",
+            BaseUtils.PATH + "/language/**",
             BaseUtils.PATH + "/auth/register"
     };
 
