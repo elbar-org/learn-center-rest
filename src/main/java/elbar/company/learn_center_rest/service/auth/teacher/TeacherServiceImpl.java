@@ -5,7 +5,6 @@ import elbar.company.learn_center_rest.dto.auth.teacher.TeacherCreateDTO;
 import elbar.company.learn_center_rest.dto.auth.teacher.TeacherDetailDTO;
 import elbar.company.learn_center_rest.dto.auth.teacher.TeacherGetDTO;
 import elbar.company.learn_center_rest.dto.auth.teacher.TeacherUpdateDTO;
-import elbar.company.learn_center_rest.entity.auth.role.Role;
 import elbar.company.learn_center_rest.entity.auth.teacher.Teacher;
 import elbar.company.learn_center_rest.mapper.auth.teacher.TeacherMapper;
 import elbar.company.learn_center_rest.repository.auth.teacher.TeacherRepository;
