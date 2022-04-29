@@ -5,7 +5,6 @@ import elbar.company.learn_center_rest.criteria.auth.teacher_skills.TeacherSkill
 import elbar.company.learn_center_rest.dto.auth.teacher_skills.TeacherSkillsCreateDTO;
 import elbar.company.learn_center_rest.dto.auth.teacher_skills.TeacherSkillsDetailDTO;
 import elbar.company.learn_center_rest.dto.auth.teacher_skills.TeacherSkillsGetDTO;
-import elbar.company.learn_center_rest.dto.auth.teacher_skills.TeacherSkillsUpdateDTO;
 import elbar.company.learn_center_rest.response.Data;
 import elbar.company.learn_center_rest.service.auth.teacher_skills.TeacherSkillsServiceImpl;
 import elbar.company.learn_center_rest.utils.BaseUtils;
