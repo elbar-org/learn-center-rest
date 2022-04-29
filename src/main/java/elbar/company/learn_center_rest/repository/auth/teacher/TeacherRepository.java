@@ -1,6 +1,5 @@
 package elbar.company.learn_center_rest.repository.auth.teacher;
 
-import elbar.company.learn_center_rest.entity.auth.status.Status;
 import elbar.company.learn_center_rest.entity.auth.teacher.Teacher;
 import elbar.company.learn_center_rest.repository.BaseRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
