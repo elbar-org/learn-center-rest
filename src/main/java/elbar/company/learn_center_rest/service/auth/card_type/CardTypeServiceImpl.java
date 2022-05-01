@@ -7,6 +7,7 @@ import elbar.company.learn_center_rest.dto.auth.card_type.CardTypeGetDTO;
 import elbar.company.learn_center_rest.dto.auth.card_type.CardTypeUpdateDTO;
 import elbar.company.learn_center_rest.entity.auth.card.AuthCard;
 import elbar.company.learn_center_rest.entity.auth.card_type.AuthCardType;
+import elbar.company.learn_center_rest.entity.auth.language.Language;
 import elbar.company.learn_center_rest.mapper.auth.card_type.CardTypeMapper;
 import elbar.company.learn_center_rest.repository.auth.card_type.CardTypeRepository;
 import elbar.company.learn_center_rest.response.Data;
@@ -18,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -35,7 +37,12 @@ public class CardTypeServiceImpl extends AbstractService<CardTypeValidator, Card
 
     @Override
     public ResponseEntity<Data<Void>> update(CardTypeUpdateDTO DTO) {
-        return null;
+        AuthCardType cardType = repository.getByCode(DTO.getCode());
+        cardType.setName(DTO.getName());
+        cardType.setPublished(DTO.isPublished());
+        cardType.setUpdatedAt(LocalDateTime.now());
+        repository.save(cardType);
+        return new ResponseEntity<>(new Data<>(true), HttpStatus.OK);
     }
 
     @Override
