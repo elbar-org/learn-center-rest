@@ -33,11 +33,6 @@ public class FaqController extends AbstractController<FaqServiceImpl> {
         return service.delete(code);
     }
 
-    @RequestMapping(value = "update", method = RequestMethod.PUT)
-    public ResponseEntity<Data<Void>> update(@RequestBody FaqUpdateDTO updateDTO) {
-        return service.update(updateDTO);
-    }
-
     @RequestMapping(value = "detail/{code}", method = RequestMethod.GET)
     public ResponseEntity<Data<FaqDetailDTO>> getWithDetail(@PathVariable UUID code) {
         return service.detail(code);
