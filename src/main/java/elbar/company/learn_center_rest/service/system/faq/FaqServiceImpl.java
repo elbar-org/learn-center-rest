@@ -5,6 +5,7 @@ import elbar.company.learn_center_rest.dto.system.faq.FaqCreateDTO;
 import elbar.company.learn_center_rest.dto.system.faq.FaqDetailDTO;
 import elbar.company.learn_center_rest.dto.system.faq.FaqGetDTO;
 import elbar.company.learn_center_rest.dto.system.faq.FaqUpdateDTO;
+import elbar.company.learn_center_rest.entity.auth.block.AuthBlock;
 import elbar.company.learn_center_rest.entity.system.faq.Faq;
 import elbar.company.learn_center_rest.mapper.system.faq.FaqMapper;
 import elbar.company.learn_center_rest.repository.system.faq.FaqRepository;
@@ -17,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
