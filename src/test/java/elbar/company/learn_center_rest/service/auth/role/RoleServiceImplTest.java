@@ -1,14 +1,6 @@
 package elbar.company.learn_center_rest.service.auth.role;
 
-import elbar.company.learn_center_rest.response.Data;
 import org.junit.jupiter.api.Test;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-
-import java.util.Arrays;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class RoleServiceImplTest {
 
