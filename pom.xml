@@ -13,9 +13,11 @@
 
     <groupId>elbar.company</groupId>
     <artifactId>learn_center_rest</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>learn_center_rest</name>
-    <description>learn_center_rest</description>
+    <description>You can buy different types of courses by registering on the online education site and after the course
+        is completed you will be given a certificate depending on the points you have earned during the course.
+    </description>
 
     <properties>
         <java.version>17</java.version>
