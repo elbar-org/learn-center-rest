@@ -1,12 +1,7 @@
 package elbar.company.learn_center_rest.controller.blog.blog;
 
 import elbar.company.learn_center_rest.controller.AbstractController;
-import elbar.company.learn_center_rest.criteria.auth.block.AuthBlockCriteria;
 import elbar.company.learn_center_rest.criteria.blog.blog.BlogCriteria;
-import elbar.company.learn_center_rest.dto.auth.block.AuthBlockCreateDTO;
-import elbar.company.learn_center_rest.dto.auth.block.AuthBlockDetailDTO;
-import elbar.company.learn_center_rest.dto.auth.block.AuthBlockGetDTO;
-import elbar.company.learn_center_rest.dto.auth.block.AuthBlockUpdateDTO;
 import elbar.company.learn_center_rest.dto.blog.blog.BlogCreateDTO;
 import elbar.company.learn_center_rest.dto.blog.blog.BlogDetailDTO;
 import elbar.company.learn_center_rest.dto.blog.blog.BlogGetDTO;

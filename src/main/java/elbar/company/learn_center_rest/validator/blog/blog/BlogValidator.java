@@ -22,6 +22,8 @@ public class BlogValidator extends AbstractValidator<BlogCreateDTO, BlogUpdateDT
 
     @Override
     public void validateKey(UUID id) throws InvalidValidationException {
-
+        if (id == null && id.toString().length() != 16) {
+            throw new InvalidValidationException();
+        }
     }
 }
