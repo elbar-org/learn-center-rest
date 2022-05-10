@@ -16,9 +16,10 @@ public class BlogValidator extends AbstractValidator<BlogCreateDTO, BlogUpdateDT
     }
 
     @Override
-    public void validOnUpdate(BlogUpdateDTO cd) throws InvalidValidationException {
+    public void validOnUpdate(BlogUpdateDTO blogUpdateDTO) throws InvalidValidationException {
 
     }
+
 
     @Override
     public void validateKey(UUID id) throws InvalidValidationException {
