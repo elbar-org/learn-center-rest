@@ -13,7 +13,7 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @ToString
 public class BlockReasonCreateDTO implements BaseDTO {
-    @Max(value = 120, message = "{language.max.size}")
+    @Max(value = 120, message = "{block_reason.max.size}")
     @NotBlank(message = "{auth.block_reason.name.required}")
     private String name;
     @SerializedName(value = "is_published")
