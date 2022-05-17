@@ -1,61 +1,14 @@
 package elbar.company.learn_center_rest.controller.auth.block;
 
-import elbar.company.learn_center_rest.controller.AbstractController;
+import elbar.company.learn_center_rest.controller.GenericCUDController;
+import elbar.company.learn_center_rest.controller.GenericGLDController;
 import elbar.company.learn_center_rest.criteria.auth.block.AuthBlockCriteria;
-import elbar.company.learn_center_rest.criteria.auth.block_reason.BlockReasonCriteria;
 import elbar.company.learn_center_rest.dto.auth.block.AuthBlockCreateDTO;
 import elbar.company.learn_center_rest.dto.auth.block.AuthBlockDetailDTO;
 import elbar.company.learn_center_rest.dto.auth.block.AuthBlockGetDTO;
 import elbar.company.learn_center_rest.dto.auth.block.AuthBlockUpdateDTO;
-import elbar.company.learn_center_rest.dto.auth.block_reason.BlockReasonCreateDTO;
-import elbar.company.learn_center_rest.dto.auth.block_reason.BlockReasonDetailDTO;
-import elbar.company.learn_center_rest.dto.auth.block_reason.BlockReasonGetDTO;
-import elbar.company.learn_center_rest.dto.auth.block_reason.BlockReasonUpdateDTO;
-import elbar.company.learn_center_rest.response.Data;
-import elbar.company.learn_center_rest.service.auth.block.AuthBlockServiceImpl;
-import elbar.company.learn_center_rest.utils.BaseUtils;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.util.List;
 import java.util.UUID;
 
-@RestController
-@RequestMapping(value = BaseUtils.PATH + "/block/*")
-public class AuthBlockController extends AbstractController<AuthBlockServiceImpl> {
-
-    public AuthBlockController(AuthBlockServiceImpl service) {
-        super(service);
-    }
-
-    @RequestMapping(value = "create", method = RequestMethod.POST)
-    public ResponseEntity<Data<Void>> create(@RequestBody AuthBlockCreateDTO createDTO) {
-        return service.create(createDTO);
-    }
-
-    @RequestMapping(value = "delete/{code}", method = RequestMethod.DELETE)
-    public ResponseEntity<Data<Void>> delete(@PathVariable UUID code) {
-        return service.delete(code);
-    }
-
-    @RequestMapping(value = "update", method = RequestMethod.PUT)
-    public ResponseEntity<Data<Void>> update(@RequestBody AuthBlockUpdateDTO updateDTO) {
-        return service.update(updateDTO);
-    }
-
-    @RequestMapping(value = "detail/{code}", method = RequestMethod.GET)
-    public ResponseEntity<Data<AuthBlockDetailDTO>> getWithDetail(@PathVariable UUID code) {
-        return service.detail(code);
-    }
-
-    @RequestMapping(value = "{code}", method = RequestMethod.GET)
-    public ResponseEntity<Data<AuthBlockGetDTO>> get(@PathVariable UUID code) {
-        return service.get(code);
-    }
-
-    @RequestMapping(value = "list", method = RequestMethod.GET)
-    public ResponseEntity<Data<List<AuthBlockGetDTO>>> getAll(@Valid AuthBlockCriteria criteria) {
-        return service.list(criteria);
-    }
+public interface AuthBlockController extends GenericCUDController<AuthBlockCreateDTO, AuthBlockUpdateDTO, UUID>, GenericGLDController<AuthBlockGetDTO, AuthBlockDetailDTO, AuthBlockCriteria, UUID> {
 }
