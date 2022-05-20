@@ -23,7 +23,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping(value = BaseUtils.PATH + "/blog_like/*")
-public class BlogLikeController extends AbstractController<BlogLikeServiceImpl> {
+public class BlogLikeController extends AbstractController<BlogLikeServiceImpl>  {
 
     public BlogLikeController(BlogLikeServiceImpl service) {
         super(service);
@@ -37,11 +37,6 @@ public class BlogLikeController extends AbstractController<BlogLikeServiceImpl> 
     @RequestMapping(value = "delete/{code}", method = RequestMethod.DELETE)
     public ResponseEntity<Data<Void>> delete(@PathVariable UUID code) {
         return service.delete(code);
-    }
-
-    @RequestMapping(value = "update", method = RequestMethod.PUT)
-    public ResponseEntity<Data<Void>> update(@RequestBody BlogLikeUpdateDTO updateDTO) {
-        return service.update(updateDTO);
     }
 
     @RequestMapping(value = "detail/{code}", method = RequestMethod.GET)
