@@ -6,10 +6,12 @@ import elbar.company.learn_center_rest.exception.exception.InvalidValidationExce
 import elbar.company.learn_center_rest.validator.AbstractValidator;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
 import java.util.UUID;
 
 @Component
 public class AuthBlockValidator extends AbstractValidator<AuthBlockCreateDTO, AuthBlockUpdateDTO, UUID> {
+
     @Override
     public void validOnCreate(AuthBlockCreateDTO authBlockCreateDTO) throws InvalidValidationException {
 
@@ -22,6 +24,8 @@ public class AuthBlockValidator extends AbstractValidator<AuthBlockCreateDTO, Au
 
     @Override
     public void validateKey(UUID id) throws InvalidValidationException {
-
+        if (Objects.isNull(id) && id.toString().length() != 16) {
+            throw new InvalidValidationException();
+        }
     }
 }
