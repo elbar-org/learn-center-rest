@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class Data<T> {
     protected T data;
-    protected int totalCount;
+    protected long totalCount;
     protected boolean isSuccess;
     protected ApplicationError error;
 
@@ -25,7 +25,7 @@ public class Data<T> {
         this.isSuccess = false;
     }
 
-    public Data(T data, int totalCount) {
+    public Data(T data, long totalCount) {
         this.data = data;
         this.isSuccess = true;
         this.totalCount = totalCount;

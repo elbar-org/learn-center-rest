@@ -15,10 +15,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @OpenAPIDefinition
 @SpringBootApplication
 @EnableTransactionManagement
-@EnableConfigurationProperties({
-        OpenApiProperties.class,
-        ServiceProperties.class
-})
+@EnableConfigurationProperties({OpenApiProperties.class, ServiceProperties.class})
 @EntityScan(basePackages = "elbar.company.learn_center_rest.entity")
 @EnableJpaRepositories(basePackages = "elbar.company.learn_center_rest.repository")
 public class LearnCenterRestApplication {
