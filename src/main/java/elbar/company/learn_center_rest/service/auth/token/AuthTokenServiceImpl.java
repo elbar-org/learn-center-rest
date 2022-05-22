@@ -42,7 +42,7 @@ public class AuthTokenServiceImpl extends AbstractService<AuthTokenValidator, Au
     @Override
     public ResponseEntity<Data<Void>> create(AuthTokenCreateDTO DTO) {
         repository.save(mapper.toCreateDTO(DTO));
-        return null;
+        return new ResponseEntity<>(new Data<>(true), HttpStatus.CREATED);
     }
 
     @Override

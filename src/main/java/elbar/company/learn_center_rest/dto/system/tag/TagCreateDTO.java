@@ -7,6 +7,7 @@ import lombok.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Getter
 @Setter
@@ -14,8 +15,7 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @ToString
 public class TagCreateDTO implements BaseDTO {
-    @Min(value = 2, message = "{tag.min.size}")
-    @Max(value = 120, message = "{tag.max.size}")
+    @Size(min = 2, max = 120, message = "{system.tag.name.length}")
     @NotBlank(message = "{system.tag.name.required}")
     private String name;
     @SerializedName(value = "is_published")

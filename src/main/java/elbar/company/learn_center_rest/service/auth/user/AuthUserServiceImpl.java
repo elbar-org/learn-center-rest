@@ -13,6 +13,7 @@ import elbar.company.learn_center_rest.repository.auth.user.AuthUserRepository;
 import elbar.company.learn_center_rest.response.Data;
 import elbar.company.learn_center_rest.service.AbstractService;
 import elbar.company.learn_center_rest.validator.auth.user.AuthUserValidator;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -36,7 +37,7 @@ public class AuthUserServiceImpl extends AbstractService<AuthUserValidator, Auth
         AuthUser user = mapper.toCreateDTO(DTO);
         user.setPassword(encoderConfigurer.encoder().encode(user.getPassword()));
         repository.save(user);
-        return null;
+        return new ResponseEntity<>(new Data<>(true), HttpStatus.CREATED);
     }
 
     @Override

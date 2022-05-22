@@ -29,12 +29,14 @@ public class TransactionStatusServiceImpl extends AbstractService<TransactionSta
 
     @Override
     public ResponseEntity<Data<Void>> create(TransactionStatusCreateDTO DTO) {
+        validator.validOnCreate(DTO);
         repository.save(mapper.toCreateDTO(DTO));
         return new ResponseEntity<>(new Data<>(true), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<Void>> update(TransactionStatusUpdateDTO DTO) {
+        validator.validOnUpdate(DTO);
         TransactionStatus status = repository.getByCode(DTO.getCode());
         status.setName(DTO.getName());
         status.setPublished(DTO.isPublished());
@@ -45,17 +47,20 @@ public class TransactionStatusServiceImpl extends AbstractService<TransactionSta
 
     @Override
     public ResponseEntity<Data<Void>> delete(UUID key) {
+        validator.validateKey(key);
         repository.deleteByCode(key);
         return new ResponseEntity<>(new Data<>(true), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<TransactionStatusGetDTO>> get(UUID key) {
+        validator.validateKey(key);
         return new ResponseEntity<>(new Data<>(mapper.fromGetDTO(repository.getByCode(key))), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<TransactionStatusDetailDTO>> detail(UUID key) {
+        validator.validateKey(key);
         return new ResponseEntity<>(new Data<>(mapper.fromDetailDTO(repository.getByCode(key))), HttpStatus.OK);
     }
 

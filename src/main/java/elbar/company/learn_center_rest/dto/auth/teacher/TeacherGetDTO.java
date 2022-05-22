@@ -4,6 +4,7 @@ import elbar.company.learn_center_rest.dto.GenericDTO;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -11,11 +12,11 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @ToString
 public class TeacherGetDTO extends GenericDTO {
-    @NotBlank(message = "{auth.teacher.userId.required}")
+    @NotNull(message = "{auth.teacher.userId.required}")
     private Integer userId;
     @NotBlank(message = "{auth.teacher.experience.required}")
     private String experience;
-    @NotBlank(message = "{auth.teacher.age.required}")
+    @NotNull(message = "{auth.teacher.age.required}")
     private Integer age;
     @NotBlank(message = "{auth.teacher.about.required}")
     private String about;

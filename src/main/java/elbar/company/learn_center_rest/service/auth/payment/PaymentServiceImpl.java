@@ -29,6 +29,7 @@ public class PaymentServiceImpl extends AbstractService<PaymentValidator, Paymen
 
     @Override
     public ResponseEntity<Data<Void>> create(PaymentCreateDTO DTO) {
+        validator.validOnCreate(DTO);
         repository.save(mapper.toCreateDTO(DTO));
         return new ResponseEntity<>(new Data<>(true), HttpStatus.OK);
     }
@@ -40,17 +41,20 @@ public class PaymentServiceImpl extends AbstractService<PaymentValidator, Paymen
 
     @Override
     public ResponseEntity<Data<Void>> delete(UUID key) {
+        validator.validateKey(key);
         repository.deleteByCode(key);
         return new ResponseEntity<>(new Data<>(true), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<PaymentGetDTO>> get(UUID key) {
+        validator.validateKey(key);
         return new ResponseEntity<>(new Data<>(mapper.fromGetDTO(repository.getByCode(key))), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<PaymentDetailDTO>> detail(UUID key) {
+        validator.validateKey(key);
         return new ResponseEntity<>(new Data<>(mapper.fromDetailDTO(repository.getByCode(key))), HttpStatus.OK);
     }
 

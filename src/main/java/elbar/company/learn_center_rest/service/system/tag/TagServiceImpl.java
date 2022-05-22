@@ -29,12 +29,14 @@ public class TagServiceImpl extends AbstractService<TagValidator, TagMapper, Tag
 
     @Override
     public ResponseEntity<Data<Void>> create(TagCreateDTO DTO) {
+        validator.validOnCreate(DTO);
         repository.save(mapper.toCreateDTO(DTO));
         return new ResponseEntity<>(new Data<>(true), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<Void>> update(TagUpdateDTO DTO) {
+        validator.validOnUpdate(DTO);
         Tag tag = repository.getByCode(DTO.getCode());
         tag.setName(DTO.getName());
         tag.setPublished(DTO.isPublished());
@@ -45,17 +47,20 @@ public class TagServiceImpl extends AbstractService<TagValidator, TagMapper, Tag
 
     @Override
     public ResponseEntity<Data<Void>> delete(UUID key) {
+        validator.validateKey(key);
         repository.deleteByCode(key);
         return new ResponseEntity<>(new Data<>(true), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<TagGetDTO>> get(UUID key) {
+        validator.validateKey(key);
         return new ResponseEntity<>(new Data<>(mapper.fromGetDTO(repository.getByCode(key))), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<TagDetailDTO>> detail(UUID key) {
+        validator.validateKey(key);
         return new ResponseEntity<>(new Data<>(mapper.fromDetailDTO(repository.getByCode(key))), HttpStatus.OK);
     }
 

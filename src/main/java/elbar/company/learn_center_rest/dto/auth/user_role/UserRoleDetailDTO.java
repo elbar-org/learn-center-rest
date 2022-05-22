@@ -4,6 +4,7 @@ import elbar.company.learn_center_rest.dto.GenericDTO;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -11,8 +12,8 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @ToString
 public class UserRoleDetailDTO extends GenericDTO {
-    @NotBlank(message = "{auth.user_role.roleId.required}")
+    @NotNull(message = "{auth.user_role.roleId.required}")
     private Integer roleId;
-    @NotBlank(message = "{auth.user_role.userId.required}")
+    @NotNull(message = "{auth.user_role.userId.required}")
     private Integer userId;
 }

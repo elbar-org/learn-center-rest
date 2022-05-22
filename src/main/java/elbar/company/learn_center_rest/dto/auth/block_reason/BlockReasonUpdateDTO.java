@@ -4,8 +4,8 @@ import com.google.gson.annotations.SerializedName;
 import elbar.company.learn_center_rest.dto.GenericDTO;
 import lombok.*;
 
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Getter
 @Setter
@@ -13,7 +13,7 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @ToString
 public class BlockReasonUpdateDTO extends GenericDTO {
-    @Max(value = 120, message = "{language.max.size}")
+    @Size(min = 3, max = 120, message = "{auth.block_reason.name.length}")
     @NotBlank(message = "{auth.block_reason.name.required}")
     private String name;
     @SerializedName(value = "is_published")

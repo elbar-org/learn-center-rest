@@ -1,12 +1,11 @@
 package elbar.company.learn_center_rest.service.auth.block;
 
 import elbar.company.learn_center_rest.criteria.auth.block.AuthBlockCriteria;
-import elbar.company.learn_center_rest.dto.auth.block.AuthBlockCreateDTO;
+import elbar.company.learn_center_rest.dto.auth.block.AuthBlockCreateDDTO;
 import elbar.company.learn_center_rest.dto.auth.block.AuthBlockDetailDTO;
 import elbar.company.learn_center_rest.dto.auth.block.AuthBlockGetDTO;
 import elbar.company.learn_center_rest.dto.auth.block.AuthBlockUpdateDTO;
 import elbar.company.learn_center_rest.entity.auth.block.AuthBlock;
-import elbar.company.learn_center_rest.entity.auth.block_reason.AuthBlockReason;
 import elbar.company.learn_center_rest.mapper.auth.block.AuthBlockMapper;
 import elbar.company.learn_center_rest.repository.auth.block.AuthBlockRepository;
 import elbar.company.learn_center_rest.response.Data;
@@ -30,13 +29,15 @@ public class AuthBlockServiceImpl extends AbstractService<AuthBlockValidator, Au
     }
 
     @Override
-    public ResponseEntity<Data<Void>> create(AuthBlockCreateDTO DTO) {
+    public ResponseEntity<Data<Void>> create(AuthBlockCreateDDTO DTO) {
+        validator.validOnCreate(DTO);
         repository.save(mapper.toCreateDTO(DTO));
         return new ResponseEntity<>(new Data<>(true), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<Void>> update(AuthBlockUpdateDTO DTO) {
+        validator.validOnUpdate(DTO);
         AuthBlock authBlock = repository.getByCode(DTO.getCode());
         authBlock.setDuration(DTO.getDuration());
         authBlock.setBlockedReason(DTO.getBlockedReason());
@@ -52,11 +53,13 @@ public class AuthBlockServiceImpl extends AbstractService<AuthBlockValidator, Au
 
     @Override
     public ResponseEntity<Data<AuthBlockGetDTO>> get(UUID key) {
+        validator.validateKey(key);
         return new ResponseEntity<>(new Data<>(mapper.fromGetDTO(repository.getByCode(key))), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<AuthBlockDetailDTO>> detail(UUID key) {
+        validator.validateKey(key);
         return new ResponseEntity<>(new Data<>(mapper.fromDetailDTO(repository.getByCode(key))), HttpStatus.OK);
     }
 

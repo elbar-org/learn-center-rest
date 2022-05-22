@@ -39,17 +39,20 @@ public class RoleServiceImpl extends AbstractService<RoleValidator, RoleMapper, 
 
     @Override
     public ResponseEntity<Data<Void>> delete(UUID key) {
+        validator.validateKey(key);
         repository.deleteByCode(key);
         return new ResponseEntity<>(new Data<>(true), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<RoleGetDTO>> get(UUID key) {
+        validator.validateKey(key);
         return new ResponseEntity<>(new Data<>(mapper.fromGetDTO(repository.getByCode(key))), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<RoleDetailDTO>> detail(UUID key) {
+        validator.validateKey(key);
         return new ResponseEntity<>(new Data<>(mapper.fromDetailDTO(repository.getByCode(key))), HttpStatus.OK);
     }
 

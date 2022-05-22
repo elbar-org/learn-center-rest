@@ -7,6 +7,7 @@ import lombok.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Getter
 @Setter
@@ -14,9 +15,8 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LanguageCreateDTO implements BaseDTO {
-    @Min(value = 2, message = "{language.min.size}")
-    @Max(value = 3, message = "{language.max.size}")
     @NotBlank(message = "{auth.language.name.required}")
+    @Size(min = 2, max = 3, message = "{auth.language.name.length}")
     private String name;
     @SerializedName(value = "is_published")
     private boolean isPublished;

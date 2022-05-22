@@ -31,12 +31,14 @@ public class BlogCategoryServiceImpl extends AbstractService<BlogCategoryValidat
 
     @Override
     public ResponseEntity<Data<Void>> create(BlogCategoryCreateDTO DTO) {
+        validator.validOnCreate(DTO);
         repository.save(mapper.toCreateDTO(DTO));
         return new ResponseEntity<>(new Data<>(true), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<Void>> update(BlogCategoryUpdateDTO DTO) {
+        validator.validOnUpdate(DTO);
         BlogCategory category = repository.getByCode(DTO.getCode());
         category.setTitle(DTO.getTitle());
         category.setDescription(DTO.getDescription());
@@ -48,17 +50,20 @@ public class BlogCategoryServiceImpl extends AbstractService<BlogCategoryValidat
 
     @Override
     public ResponseEntity<Data<Void>> delete(UUID key) {
+        validator.validateKey(key);
         repository.deleteByCode(key);
         return new ResponseEntity<>(new Data<>(true), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<BlogCategoryGetDTO>> get(UUID key) {
+        validator.validateKey(key);
         return new ResponseEntity<>(new Data<>(mapper.fromGetDTO(repository.getByCode(key))), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<BlogCategoryDetailDTO>> detail(UUID key) {
+        validator.validateKey(key);
         return new ResponseEntity<>(new Data<>(mapper.fromDetailDTO(repository.getByCode(key))), HttpStatus.OK);
     }
 

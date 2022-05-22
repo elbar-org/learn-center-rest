@@ -4,6 +4,7 @@ import elbar.company.learn_center_rest.dto.GenericDTO;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -11,11 +12,11 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @ToString
 public class TransactionDetailDTO extends GenericDTO {
-    @NotBlank(message = "{system.transaction.courseId.required}")
+    @NotNull(message = "{system.transaction.courseId.required}")
     private Integer courseId;
-    @NotBlank(message = "{system.transaction.userId.required}")
+    @NotNull(message = "{system.transaction.userId.required}")
     private Integer userId;
-    @NotBlank(message = "{system.transaction.cardId.required}")
+    @NotNull(message = "{system.transaction.cardId.required}")
     private Integer cardId;
     @NotBlank(message = "{system.transaction.quantity.required}")
     private String quantity;

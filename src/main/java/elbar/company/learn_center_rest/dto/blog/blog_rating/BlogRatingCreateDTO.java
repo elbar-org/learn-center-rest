@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -13,12 +14,12 @@ import javax.validation.constraints.NotBlank;
 @ToString
 public class BlogRatingCreateDTO implements BaseDTO {
     @Min(value = 1, message = "{blog_rating.min.size}")
-    @NotBlank(message = "{blog.blog_rating.blogId.required}")
+    @NotNull(message = "{blog.blog_rating.blogId.required}")
     private Integer blogId;
     @Min(value = 1, message = "{blog_rating.min.size}")
-    @NotBlank(message = "{blog.blog_rating.views.required}")
+    @NotNull(message = "{blog.blog_rating.views.required}")
     private Integer views;
     @Min(value = 1, message = "{blog_rating.min.size}")
-    @NotBlank(message = "{blog.blog_rating.stars.required}")
+    @NotNull(message = "{blog.blog_rating.stars.required}")
     private Integer stars;
 }

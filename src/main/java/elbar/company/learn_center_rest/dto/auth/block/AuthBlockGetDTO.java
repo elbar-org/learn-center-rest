@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Getter
@@ -13,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @ToString
 public class AuthBlockGetDTO extends GenericDTO {
-    @NotBlank(message = "{auth.auth_block.userId.required}")
+    @NotNull(message = "{auth.auth_block.userId.required}")
     private Integer userId;
     @NotBlank(message = "{auth.auth_block.duration.required}")
     private LocalDateTime duration;

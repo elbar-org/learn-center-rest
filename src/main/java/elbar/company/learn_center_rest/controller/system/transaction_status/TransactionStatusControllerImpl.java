@@ -11,9 +11,9 @@ import elbar.company.learn_center_rest.service.system.transaction_status.Transac
 import elbar.company.learn_center_rest.utils.BaseUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 

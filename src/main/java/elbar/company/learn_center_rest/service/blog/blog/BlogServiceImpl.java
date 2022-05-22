@@ -29,12 +29,14 @@ public class BlogServiceImpl extends AbstractService<BlogValidator, BlogMapper, 
 
     @Override
     public ResponseEntity<Data<Void>> create(BlogCreateDTO DTO) {
+        validator.validOnCreate(DTO);
         repository.save(mapper.toCreateDTO(DTO));
         return new ResponseEntity<>(new Data<>(true), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<Void>> update(BlogUpdateDTO DTO) {
+        validator.validOnUpdate(DTO);
         Blog blog = repository.getByCode(DTO.getCode());
         blog.setTitle(DTO.getTitle());
         blog.setDescription(DTO.getDescription());
@@ -49,17 +51,20 @@ public class BlogServiceImpl extends AbstractService<BlogValidator, BlogMapper, 
 
     @Override
     public ResponseEntity<Data<Void>> delete(UUID key) {
+        validator.validateKey(key);
         repository.deleteByCode(key);
         return new ResponseEntity<>(new Data<>(true), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<BlogGetDTO>> get(UUID key) {
+        validator.validateKey(key);
         return new ResponseEntity<>(new Data<>(mapper.fromGetDTO(repository.getByCode(key))), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<BlogDetailDTO>> detail(UUID key) {
+        validator.validateKey(key);
         return new ResponseEntity<>(new Data<>(mapper.fromDetailDTO(repository.getByCode(key))), HttpStatus.OK);
     }
 

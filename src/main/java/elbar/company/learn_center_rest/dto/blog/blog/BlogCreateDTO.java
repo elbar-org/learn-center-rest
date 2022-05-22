@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Getter
@@ -27,7 +28,7 @@ public class BlogCreateDTO implements BaseDTO {
     @Size(min = 8, message = "{blog.blog.image.size}")
     private String image;
     @Min(value = 1, message = "{blog.min.size}")
-    @NotBlank(message = "{blog.blog.categoryId.required}")
+    @NotNull(message = "{blog.blog.categoryId.required}")
     private Integer categoryId;
     @SerializedName(value = "is_published")
     private boolean isPublished;

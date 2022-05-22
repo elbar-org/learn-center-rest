@@ -1,12 +1,11 @@
 package elbar.company.learn_center_rest.dto.auth.card_type;
 
+import com.google.gson.annotations.SerializedName;
 import elbar.company.learn_center_rest.dto.BaseDTO;
-import elbar.company.learn_center_rest.dto.GenericDTO;
 import lombok.*;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Getter
 @Setter
@@ -14,10 +13,9 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @ToString
 public class CardTypeCreateDTO implements BaseDTO {
-    @Min(value = 3, message = "{card_type.min.size}")
-    @Max(value = 120, message = "{card_type.max.size}")
     @NotBlank(message = "{auth.card_type.name.required}")
+    @Size(min = 3, max = 120, message = "{auth.card_type.name.length}")
     private String name;
-    @NotBlank(message = "{auth.card_type.is_published.required}")
+    @SerializedName(value = "is_published")
     private boolean isPublished;
 }

@@ -31,12 +31,14 @@ public class SkillServiceImpl extends AbstractService<SkillValidator, SkillMappe
 
     @Override
     public ResponseEntity<Data<Void>> create(SkillCreateDTO DTO) {
+        validator.validOnCreate(DTO);
         repository.save(mapper.toCreateDTO(DTO));
         return new ResponseEntity<>(new Data<>(true), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<Void>> update(SkillUpdateDTO DTO) {
+        validator.validOnUpdate(DTO);
         Skill skill = repository.getByCode(DTO.getCode());
         skill.setName(DTO.getName());
         skill.setPublished(DTO.isPublished());
@@ -47,17 +49,20 @@ public class SkillServiceImpl extends AbstractService<SkillValidator, SkillMappe
 
     @Override
     public ResponseEntity<Data<Void>> delete(UUID key) {
+        validator.validateKey(key);
         repository.deleteByCode(key);
         return new ResponseEntity<>(new Data<>(true), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<SkillGetDTO>> get(UUID key) {
+        validator.validateKey(key);
         return new ResponseEntity<>(new Data<>(mapper.fromGetDTO(repository.getByCode(key))), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<SkillDetailDTO>> detail(UUID key) {
+        validator.validateKey(key);
         return new ResponseEntity<>(new Data<>(mapper.fromDetailDTO(repository.getByCode(key))), HttpStatus.OK);
     }
 
