@@ -12,12 +12,8 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @ToString
 public class TeacherGetDTO extends GenericDTO {
-    @NotNull(message = "{auth.teacher.userId.required}")
     private Integer userId;
-    @NotBlank(message = "{auth.teacher.experience.required}")
     private String experience;
-    @NotNull(message = "{auth.teacher.age.required}")
     private Integer age;
-    @NotBlank(message = "{auth.teacher.about.required}")
     private String about;
 }

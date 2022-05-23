@@ -11,9 +11,7 @@ import lombok.*;
 @AllArgsConstructor
 public class BlogCategoryGetDTO extends GenericDTO {
     private String title;
-
     private String description;
-
     @SerializedName(value = "is_published")
     private Boolean isPublished;
 }

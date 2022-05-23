@@ -12,12 +12,8 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @ToString
 public class CardGetDTO extends GenericDTO {
-    @NotNull(message = "{auth.card.userId.required}")
     private Integer userId;
-    @NotBlank(message = "{auth.card.pan.required}")
     private String pan;
-    @NotBlank(message = "{auth.card.type.required}")
     private String type;
-    @NotBlank(message = "{auth.card.holderName.required}")
     private String holderName;
 }

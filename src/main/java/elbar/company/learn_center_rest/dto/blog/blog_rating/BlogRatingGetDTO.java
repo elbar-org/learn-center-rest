@@ -12,10 +12,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @ToString
 public class BlogRatingGetDTO extends GenericDTO {
-    @NotNull(message = "{blog.blog_rating.blogId.required}")
     private Integer blogId;
-    @NotNull(message = "{blog.blog_rating.views.required}")
     private Integer views;
-    @NotNull(message = "{blog.blog_rating.stars.required}")
     private Integer stars;
 }

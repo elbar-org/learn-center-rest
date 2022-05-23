@@ -12,9 +12,7 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @ToString
 public class FaqGetDTO extends GenericDTO {
-    @NotBlank(message = "{system.faq.question.required}")
     private String question;
-    @NotBlank(message = "{system.faq.answer.required}")
     private String answer;
     @SerializedName(value = "is_published")
     private boolean isPublished;

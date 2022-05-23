@@ -12,7 +12,6 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @ToString
 public class TransactionStatusGetDTO extends GenericDTO {
-    @NotBlank(message = "{system.transaction_status.name.required}")
     private String name;
     @SerializedName(value = "is_published")
     private boolean isPublished;

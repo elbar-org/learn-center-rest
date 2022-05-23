@@ -12,7 +12,6 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @ToString
 public class SkillGetDTO extends GenericDTO {
-    @NotBlank(message = "{system.skill.name.required}")
     private String name;
     @SerializedName(value = "is_published")
     private boolean isPublished;

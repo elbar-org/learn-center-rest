@@ -14,17 +14,8 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AuthTokenDetailDTO extends GenericDTO {
-    @NotBlank(message = "{user.code.required}")
     private UUID userCode;
-
-    @Min(value = 5, message = "{token.min.size}")
-    @NotBlank(message = "{token.required}")
     private String token;
-
-    @NotBlank(message = "{duration.required}")
     private Date duration;
-
-    @Min(value = 5, message = "{type.min.size}")
-    @NotBlank(message = "{type.required}")
     private String type;
 }
