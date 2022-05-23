@@ -33,7 +33,7 @@ public class CourseTagServiceImpl extends AbstractService<CourseTagValidator, Co
     public ResponseEntity<Data<Void>> create(CourseTagCreateDTO DTO) {
         validator.validOnCreate(DTO);
         repository.save(mapper.toCreateDTO(DTO));
-        return new ResponseEntity<>(new Data<>(null), HttpStatus.OK);
+        return new ResponseEntity<>(new Data<>(null), HttpStatus.CREATED);
     }
 
     @Override

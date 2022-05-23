@@ -33,7 +33,7 @@ public class CourseCategoryServiceImpl extends AbstractService<CourseCategoryVal
     public ResponseEntity<Data<Void>> create(CourseCategoryCreateDTO DTO) {
         validator.validOnCreate(DTO);
         repository.save(mapper.toCreateDTO(DTO));
-        return new ResponseEntity<>(new Data<>(null), HttpStatus.OK);
+        return new ResponseEntity<>(new Data<>(null), HttpStatus.CREATED);
     }
 
     @Override
