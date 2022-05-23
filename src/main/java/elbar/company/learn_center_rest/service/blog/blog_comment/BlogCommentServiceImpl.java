@@ -29,12 +29,14 @@ public class BlogCommentServiceImpl extends AbstractService<BlogCommentValidator
 
     @Override
     public ResponseEntity<Data<Void>> create(BlogCommentCreateDTO DTO) {
+        validator.validOnCreate(DTO);
         repository.save(mapper.toCreateDTO(DTO));
         return new ResponseEntity<>(new Data<>(true), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<Void>> update(BlogCommentUpdateDTO DTO) {
+        validator.validOnUpdate(DTO);
         BlogComment comment = repository.getByCode(DTO.getCode());
         comment.setMessage(DTO.getMessage());
         comment.setUpdatedAt(LocalDateTime.now());
@@ -44,17 +46,20 @@ public class BlogCommentServiceImpl extends AbstractService<BlogCommentValidator
 
     @Override
     public ResponseEntity<Data<Void>> delete(UUID key) {
+        validator.validateKey(key);
         repository.deleteByCode(key);
         return new ResponseEntity<>(new Data<>(true), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<BlogCommentGetDTO>> get(UUID key) {
+        validator.validateKey(key);
         return new ResponseEntity<>(new Data<>(mapper.fromGetDTO(repository.getByCode(key))), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<BlogCommentDetailDTO>> detail(UUID key) {
+        validator.validateKey(key);
         return new ResponseEntity<>(new Data<>(mapper.fromDetailDTO(repository.getByCode(key))), HttpStatus.OK);
     }
 

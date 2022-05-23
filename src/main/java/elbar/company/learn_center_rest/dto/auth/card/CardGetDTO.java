@@ -4,6 +4,7 @@ import elbar.company.learn_center_rest.dto.GenericDTO;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -11,7 +12,7 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @ToString
 public class CardGetDTO extends GenericDTO {
-    @NotBlank(message = "{auth.card.userId.required}")
+    @NotNull(message = "{auth.card.userId.required}")
     private Integer userId;
     @NotBlank(message = "{auth.card.pan.required}")
     private String pan;

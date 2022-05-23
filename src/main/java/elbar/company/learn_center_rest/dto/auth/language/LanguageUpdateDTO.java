@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Getter
 @Setter
@@ -13,10 +14,9 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @ToString
 public class LanguageUpdateDTO extends GenericDTO {
-    @Min(value = 2, message = "{auth.language.min.size}")
     @NotBlank(message = "{auth.language.name.required}")
+    @Size(min = 2, max = 3, message = "{auth.language.name.length}")
     private String name;
-    @NotBlank(message = "{auth.language.is_published.required}")
     @SerializedName(value = "is_published")
-    private Boolean isPublished;
+    private boolean isPublished;
 }

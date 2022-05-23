@@ -7,6 +7,7 @@ import lombok.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Getter
 @Setter
@@ -14,8 +15,7 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @ToString
 public class SkillCreateDTO implements BaseDTO {
-    @Min(value = 2, message = "{skill.min.size}")
-    @Max(value = 120, message = "{skill.max.size}")
+    @Size(min = 2, max = 120, message = "{system.skill.name.length}")
     @NotBlank(message = "{system.skill.name.required}")
     private String name;
     @SerializedName(value = "is_published")

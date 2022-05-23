@@ -7,6 +7,7 @@ import lombok.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Getter
 @Setter
@@ -14,8 +15,7 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @ToString
 public class TransactionStatusCreateDTO implements BaseDTO {
-    @Min(value = 3, message = "{transaction_status.min.size}")
-    @Max(value = 120, message = "{transaction_status.max.size}")
+    @Size(min = 3, max = 120, message = "{system.transaction_status.name.length}")
     @NotBlank(message = "{system.transaction_status.name.required}")
     private String name;
     @SerializedName(value = "is_published")

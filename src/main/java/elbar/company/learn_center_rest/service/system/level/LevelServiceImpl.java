@@ -30,12 +30,14 @@ public class LevelServiceImpl extends AbstractService<LevelValidator, LevelMappe
 
     @Override
     public ResponseEntity<Data<Void>> create(LevelCreateDTO DTO) {
+        validator.validOnCreate(DTO);
         repository.save(mapper.toCreateDTO(DTO));
         return new ResponseEntity<>(new Data<>(true), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<Void>> update(LevelUpdateDTO DTO) {
+        validator.validOnUpdate(DTO);
         Level level = repository.getByCode(DTO.getCode());
         level.setName(DTO.getName());
         level.setPublished(DTO.isPublished());
@@ -46,17 +48,20 @@ public class LevelServiceImpl extends AbstractService<LevelValidator, LevelMappe
 
     @Override
     public ResponseEntity<Data<Void>> delete(UUID key) {
+        validator.validateKey(key);
         repository.deleteByCode(key);
         return new ResponseEntity<>(new Data<>(true), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<LevelGetDTO>> get(UUID key) {
+        validator.validateKey(key);
         return new ResponseEntity<>(new Data<>(mapper.fromGetDTO(repository.getByCode(key))), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<LevelDetailDTO>> detail(UUID key) {
+        validator.validateKey(key);
         return new ResponseEntity<>(new Data<>(mapper.fromDetailDTO(repository.getByCode(key))), HttpStatus.OK);
     }
 

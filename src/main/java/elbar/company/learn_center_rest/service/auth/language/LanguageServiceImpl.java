@@ -32,15 +32,17 @@ public class LanguageServiceImpl extends AbstractService<LanguageValidator, Lang
 
     @Override
     public ResponseEntity<Data<Void>> create(LanguageCreateDTO DTO) {
+        validator.validOnCreate(DTO);
         repository.save(mapper.toCreateDTO(DTO));
         return new ResponseEntity<>(new Data<>(true), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<Void>> update(LanguageUpdateDTO DTO) {
+        validator.validOnUpdate(DTO);
         Language language = repository.getByCode(DTO.getCode());
         language.setName(DTO.getName());
-        language.setPublished(DTO.getIsPublished());
+        language.setPublished(DTO.isPublished());
         language.setUpdatedAt(LocalDateTime.now());
         repository.save(language);
         return new ResponseEntity<>(new Data<>(true), HttpStatus.OK);
@@ -48,17 +50,20 @@ public class LanguageServiceImpl extends AbstractService<LanguageValidator, Lang
 
     @Override
     public ResponseEntity<Data<Void>> delete(UUID key) {
+        validator.validateKey(key);
         repository.deleteByCode(key);
         return new ResponseEntity<>(new Data<>(true), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<LanguageGetDTO>> get(UUID key) {
+        validator.validateKey(key);
         return new ResponseEntity<>(new Data<>(mapper.fromGetDTO(repository.getByCode(key))), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<LanguageDetailDTO>> detail(UUID key) {
+        validator.validateKey(key);
         return new ResponseEntity<>(new Data<>(mapper.fromDetailDTO(repository.getByCode(key))), HttpStatus.OK);
     }
 

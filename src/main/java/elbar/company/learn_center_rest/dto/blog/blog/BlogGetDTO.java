@@ -5,6 +5,7 @@ import elbar.company.learn_center_rest.dto.GenericDTO;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -20,7 +21,7 @@ public class BlogGetDTO extends GenericDTO {
     private String content;
     @NotBlank(message = "{blog.blog.image.required}")
     private String image;
-    @NotBlank(message = "{blog.blog.categoryId.required}")
+    @NotNull(message = "{blog.blog.categoryId.required}")
     private Integer categoryId;
     @SerializedName(value = "is_published")
     private boolean isPublished;

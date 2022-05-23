@@ -6,7 +6,6 @@ import elbar.company.learn_center_rest.dto.auth.block_reason.BlockReasonDetailDT
 import elbar.company.learn_center_rest.dto.auth.block_reason.BlockReasonGetDTO;
 import elbar.company.learn_center_rest.dto.auth.block_reason.BlockReasonUpdateDTO;
 import elbar.company.learn_center_rest.entity.auth.block_reason.AuthBlockReason;
-import elbar.company.learn_center_rest.entity.auth.language.Language;
 import elbar.company.learn_center_rest.mapper.auth.block_reason.BlockReasonMapper;
 import elbar.company.learn_center_rest.repository.auth.block_reason.BlockReasonRepository;
 import elbar.company.learn_center_rest.response.Data;
@@ -30,12 +29,14 @@ public class BlockReasonServiceImpl extends AbstractService<BlockReasonValidator
 
     @Override
     public ResponseEntity<Data<Void>> create(BlockReasonCreateDTO DTO) {
+        validator.validOnCreate(DTO);
         repository.save(mapper.toCreateDTO(DTO));
         return new ResponseEntity<>(new Data<>(true), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<Void>> update(BlockReasonUpdateDTO DTO) {
+        validator.validOnUpdate(DTO);
         AuthBlockReason reason = repository.getByCode(DTO.getCode());
         reason.setName(DTO.getName());
         reason.setPublished(DTO.isPublished());
@@ -45,12 +46,14 @@ public class BlockReasonServiceImpl extends AbstractService<BlockReasonValidator
 
     @Override
     public ResponseEntity<Data<Void>> delete(UUID key) {
+        validator.validateKey(key);
         repository.deleteByCode(key);
         return new ResponseEntity<>(new Data<>(true), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<BlockReasonGetDTO>> get(UUID key) {
+        validator.validateKey(key);
         return new ResponseEntity<>(new Data<>(mapper.fromGetDTO(repository.getByCode(key))), HttpStatus.OK);
     }
 

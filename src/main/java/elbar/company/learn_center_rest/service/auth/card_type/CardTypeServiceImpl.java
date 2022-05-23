@@ -29,12 +29,14 @@ public class CardTypeServiceImpl extends AbstractService<CardTypeValidator, Card
 
     @Override
     public ResponseEntity<Data<Void>> create(CardTypeCreateDTO DTO) {
+        validator.validOnCreate(DTO);
         repository.save(mapper.toCreateDTO(DTO));
         return new ResponseEntity<>(new Data<>(true), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<Void>> update(CardTypeUpdateDTO DTO) {
+        validator.validOnUpdate(DTO);
         AuthCardType cardType = repository.getByCode(DTO.getCode());
         cardType.setName(DTO.getName());
         cardType.setPublished(DTO.isPublished());
@@ -45,17 +47,20 @@ public class CardTypeServiceImpl extends AbstractService<CardTypeValidator, Card
 
     @Override
     public ResponseEntity<Data<Void>> delete(UUID key) {
+        validator.validateKey(key);
         repository.deleteByCode(key);
         return new ResponseEntity<>(new Data<>(true), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<CardTypeGetDTO>> get(UUID key) {
+        validator.validateKey(key);
         return new ResponseEntity<>(new Data<>(mapper.fromGetDTO(repository.getByCode(key))), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<CardTypeDetailDTO>> detail(UUID key) {
+        validator.validateKey(key);
         return new ResponseEntity<>(new Data<>(mapper.fromDetailDTO(repository.getByCode(key))), HttpStatus.OK);
     }
 

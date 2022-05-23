@@ -4,6 +4,7 @@ import elbar.company.learn_center_rest.dto.GenericDTO;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -11,8 +12,8 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @ToString
 public class BlogLikeDetailDTO extends GenericDTO {
-    @NotBlank(message = "{blog.blog_like.blogId.required}")
+    @NotNull(message = "{blog.blog_like.blogId.required}")
     private Integer blogId;
-    @NotBlank(message = "{blog.blog_like.userId.required}")
+    @NotNull(message = "{blog.blog_like.userId.required}")
     private Integer userId;
 }

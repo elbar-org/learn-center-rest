@@ -7,6 +7,7 @@ import lombok.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Getter
 @Setter
@@ -14,8 +15,7 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @ToString
 public class RoleUpdateDTO extends GenericDTO {
-    @Min(value = 2, message = "{role.min.size}")
-    @Max(value = 30, message = "{role.max.size}")
+    @Size(min = 2, max = 30, message = "{auth.language.name.length}")
     @NotBlank(message = "{auth.role.name.required}")
     private String name;
     @SerializedName(value = "is_published")

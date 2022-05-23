@@ -3,9 +3,7 @@ package elbar.company.learn_center_rest.dto.auth.card;
 import elbar.company.learn_center_rest.dto.GenericDTO;
 import lombok.*;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.*;
 
 @Getter
 @Setter
@@ -13,18 +11,15 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @ToString
 public class CardUpdateDTO extends GenericDTO {
-    @NotBlank(message = "{auth.card.userId.required}")
+    @NotNull(message = "{auth.card.userId.required}")
     private Integer userId;
-    @Min(value = 4, message = "{card.min.size}")
-    @Max(value = 120, message = "{card.max.size}")
+    @Size(min = 16, max = 16, message = "{auth.card.pan.length}")
     @NotBlank(message = "{auth.card.pan.required}")
     private String pan;
-    @Min(value = 2, message = "{card.min.size}")
-    @Max(value = 120, message = "{card.max.size}")
+    @Size(min = 3, max = 120, message = "{auth.card.type.length}")
     @NotBlank(message = "{auth.card.type.required}")
     private String type;
-    @Min(value = 12, message = "{card.min.size}")
-    @Max(value = 120, message = "{card.max.size}")
+    @Size(min = 5, max = 120, message = "{auth.card.holderName.length}")
     @NotBlank(message = "{auth.card.holderName.required}")
     private String holderName;
 }

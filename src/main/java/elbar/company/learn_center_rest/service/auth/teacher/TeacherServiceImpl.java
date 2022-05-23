@@ -31,12 +31,14 @@ public class TeacherServiceImpl extends AbstractService<TeacherValidator, Teache
 
     @Override
     public ResponseEntity<Data<Void>> create(TeacherCreateDTO DTO) {
+        validator.validOnCreate(DTO);
         repository.save(mapper.toCreateDTO(DTO));
         return new ResponseEntity<>(new Data<>(true), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<Void>> update(TeacherUpdateDTO DTO) {
+        validator.validOnUpdate(DTO);
         Teacher teacher = repository.getByCode(DTO.getCode());
         teacher.setAbout(DTO.getAbout());
         teacher.setUpdatedAt(LocalDateTime.now());
@@ -48,17 +50,20 @@ public class TeacherServiceImpl extends AbstractService<TeacherValidator, Teache
 
     @Override
     public ResponseEntity<Data<Void>> delete(UUID key) {
+        validator.validateKey(key);
         repository.deleteByCode(key);
         return new ResponseEntity<>(new Data<>(true), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<TeacherGetDTO>> get(UUID key) {
+        validator.validateKey(key);
         return new ResponseEntity<>(new Data<>(mapper.fromGetDTO(repository.getByCode(key))), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<TeacherDetailDTO>> detail(UUID key) {
+        validator.validateKey(key);
         return new ResponseEntity<>(new Data<>(mapper.fromDetailDTO(repository.getByCode(key))), HttpStatus.OK);
     }
 

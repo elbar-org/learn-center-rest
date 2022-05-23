@@ -5,6 +5,8 @@ import lombok.*;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Getter
@@ -13,11 +15,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @ToString
 public class AuthBlockUpdateDTO extends GenericDTO {
-    @NotBlank(message = "{auth.auth_block.userId.required}")
+    @NotNull(message = "{auth.auth_block.userId.required}")
     private Integer userId;
     @NotBlank(message = "{auth.auth_block.duration.required}")
     private LocalDateTime duration;
-    @Max(value = 120, message = "{auth_block.max.size}")
+    @Size(min = 5, max = 120, message = "{auth.auth_block.blockedReason.length}")
     @NotBlank(message = "{auth.auth_block.blockedReason.required}")
     private String blockedReason;
 }

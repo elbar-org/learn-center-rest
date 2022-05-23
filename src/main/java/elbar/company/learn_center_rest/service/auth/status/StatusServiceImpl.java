@@ -5,12 +5,15 @@ import elbar.company.learn_center_rest.dto.auth.status.StatusCreateDTO;
 import elbar.company.learn_center_rest.dto.auth.status.StatusDetailDTO;
 import elbar.company.learn_center_rest.dto.auth.status.StatusGetDTO;
 import elbar.company.learn_center_rest.dto.auth.status.StatusUpdateDTO;
+import elbar.company.learn_center_rest.entity.auth.payment.AuthPayment;
 import elbar.company.learn_center_rest.entity.auth.status.Status;
 import elbar.company.learn_center_rest.mapper.auth.status.StatusMapper;
 import elbar.company.learn_center_rest.repository.auth.status.StatusRepository;
 import elbar.company.learn_center_rest.response.Data;
 import elbar.company.learn_center_rest.service.AbstractService;
 import elbar.company.learn_center_rest.validator.auth.status.StatusValidator;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -29,12 +32,14 @@ public class StatusServiceImpl extends AbstractService<StatusValidator, StatusMa
 
     @Override
     public ResponseEntity<Data<Void>> create(StatusCreateDTO DTO) {
+        validator.validOnCreate(DTO);
         repository.save(mapper.toCreateDTO(DTO));
         return new ResponseEntity<>(new Data<>(true), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<Void>> update(StatusUpdateDTO DTO) {
+        validator.validOnUpdate(DTO);
         Status status = repository.getByCode(DTO.getCode());
         status.setName(DTO.getName());
         status.setPublished(DTO.getIsPublished());
@@ -45,22 +50,27 @@ public class StatusServiceImpl extends AbstractService<StatusValidator, StatusMa
 
     @Override
     public ResponseEntity<Data<Void>> delete(UUID key) {
+        validator.validateKey(key);
         repository.deleteByCode(key);
         return new ResponseEntity<>(new Data<>(true), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<StatusGetDTO>> get(UUID key) {
+        validator.validateKey(key);
         return new ResponseEntity<>(new Data<>(mapper.fromGetDTO(repository.getByCode(key))), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<StatusDetailDTO>> detail(UUID key) {
+        validator.validateKey(key);
         return new ResponseEntity<>(new Data<>(mapper.fromDetailDTO(repository.getByCode(key))), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<List<StatusGetDTO>>> list(StatusCriteria criteria) {
-        return new ResponseEntity<>(new Data<>(mapper.fromGetListDTO(repository.findAll())), HttpStatus.OK);
+        PageRequest request = PageRequest.of(criteria.getPage(), criteria.getSize());
+        Page<Status> all = repository.findAll(request);
+        return new ResponseEntity<>(new Data<>(mapper.fromGetListDTO(all.toList()), all.getSize()), HttpStatus.OK);
     }
 }

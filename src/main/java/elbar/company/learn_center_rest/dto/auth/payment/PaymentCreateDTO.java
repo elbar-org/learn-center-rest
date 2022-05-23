@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -13,13 +14,13 @@ import javax.validation.constraints.NotBlank;
 @ToString
 public class PaymentCreateDTO implements BaseDTO {
     @Min(value = 1, message = "{payment.min.size}")
-    @NotBlank(message = "{auth.payment.userId.required}")
+    @NotNull(message = "{auth.payment.userId.required}")
     private Integer userId;
     @Min(value = 1, message = "{payment.min.size}")
-    @NotBlank(message = "{auth.payment.courseId.required}")
+    @NotNull(message = "{auth.payment.courseId.required}")
     private Integer courseId;
     @Min(value = 1, message = "{payment.min.size}")
-    @NotBlank(message = "{auth.payment.cardId.required}")
+    @NotNull(message = "{auth.payment.cardId.required}")
     private Integer cardId;
     @Min(value = 1, message = "{payment.min.size}")
     @NotBlank(message = "{auth.payment.amount.required}")
