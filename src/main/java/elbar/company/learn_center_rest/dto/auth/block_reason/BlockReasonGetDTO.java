@@ -12,8 +12,6 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @ToString
 public class BlockReasonGetDTO extends GenericDTO {
-    @NotBlank(message = "{auth.block_reason.name.required}")
     private String name;
-    @SerializedName(value = "is_published")
     private boolean isPublished;
 }

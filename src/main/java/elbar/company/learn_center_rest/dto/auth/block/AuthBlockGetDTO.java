@@ -14,10 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @ToString
 public class AuthBlockGetDTO extends GenericDTO {
-    @NotNull(message = "{auth.auth_block.userId.required}")
     private Integer userId;
-    @NotBlank(message = "{auth.auth_block.duration.required}")
     private LocalDateTime duration;
-    @NotBlank(message = "{auth.auth_block.blockedReason.required}")
     private String blockedReason;
 }

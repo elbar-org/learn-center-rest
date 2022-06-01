@@ -12,8 +12,6 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @ToString
 public class BlogCommentDetailDTO extends GenericDTO {
-    @NotNull(message = "{blog.blog_comment.blogId.required}")
     private Integer blogId;
-    @NotBlank(message = "{blog.blog_comment.message.required}")
     private String message;
 }

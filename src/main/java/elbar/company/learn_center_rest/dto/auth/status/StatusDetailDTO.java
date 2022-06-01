@@ -11,9 +11,6 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @ToString
 public class StatusDetailDTO extends GenericDTO {
-    @NotBlank(message = "{auth.status.name.required}")
     private String name;
-    @SerializedName(value = "is_published")
-    @NotBlank(message = "{auth.status.is_published.required}")
     private Boolean isPublished;
 }

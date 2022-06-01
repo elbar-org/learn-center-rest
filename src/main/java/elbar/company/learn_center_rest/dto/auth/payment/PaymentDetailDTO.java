@@ -11,12 +11,8 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @ToString
 public class PaymentDetailDTO extends GenericDTO {
-    @NotBlank(message = "{auth.payment.userId.required}")
     private Integer userId;
-    @NotBlank(message = "{auth.payment.courseId.required}")
     private Integer courseId;
-    @NotBlank(message = "{auth.payment.cardId.required}")
     private Integer cardId;
-    @NotBlank(message = "{auth.payment.amount.required}")
     private String amount;
 }

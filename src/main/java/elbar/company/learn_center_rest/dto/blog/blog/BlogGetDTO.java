@@ -13,16 +13,10 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @ToString
 public class BlogGetDTO extends GenericDTO {
-    @NotBlank(message = "{blog.blog.title.required}")
     private String title;
-    @NotBlank(message = "{blog.blog.description.required}")
     private String description;
-    @NotBlank(message = "{blog.blog.content.required}")
     private String content;
-    @NotBlank(message = "{blog.blog.image.required}")
     private String image;
-    @NotNull(message = "{blog.blog.categoryId.required}")
     private Integer categoryId;
-    @SerializedName(value = "is_published")
     private boolean isPublished;
 }

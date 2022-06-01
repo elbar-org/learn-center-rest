@@ -11,8 +11,6 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LanguageGetDTO extends GenericDTO {
-    @NotBlank(message = "{auth.language.name.required}")
     private String name;
-    @SerializedName(value = "is_published")
     private Boolean isPublished;
 }

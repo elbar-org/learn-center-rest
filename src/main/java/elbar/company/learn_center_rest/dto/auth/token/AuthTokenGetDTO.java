@@ -12,9 +12,6 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AuthTokenGetDTO extends GenericDTO {
-    @NotBlank(message = "{type.required}")
     private String type;
-
-    @NotBlank(message = "{token.required}")
     private String token;
 }

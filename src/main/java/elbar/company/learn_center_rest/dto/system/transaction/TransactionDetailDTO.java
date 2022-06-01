@@ -12,14 +12,9 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @ToString
 public class TransactionDetailDTO extends GenericDTO {
-    @NotNull(message = "{system.transaction.courseId.required}")
     private Integer courseId;
-    @NotNull(message = "{system.transaction.userId.required}")
     private Integer userId;
-    @NotNull(message = "{system.transaction.cardId.required}")
     private Integer cardId;
-    @NotBlank(message = "{system.transaction.quantity.required}")
     private String quantity;
-    @NotBlank(message = "{system.transaction.status.required}")
     private String status;
 }

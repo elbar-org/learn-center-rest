@@ -12,8 +12,6 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @ToString
 public class UserRoleGetDTO extends GenericDTO {
-    @NotNull(message = "{auth.user_role.roleId.required}")
     private Integer roleId;
-    @NotNull(message = "{auth.user_role.userId.required}")
     private Integer userId;
 }
