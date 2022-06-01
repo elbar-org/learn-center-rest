@@ -8,6 +8,7 @@ import elbar.company.learn_center_rest.dto.auth.token.AuthTokenCreateDTO;
 import elbar.company.learn_center_rest.dto.auth.token.AuthTokenDetailDTO;
 import elbar.company.learn_center_rest.dto.auth.token.AuthTokenGetDTO;
 import elbar.company.learn_center_rest.dto.auth.token.AuthTokenUpdateDTO;
+import elbar.company.learn_center_rest.entity.auth.token.AuthToken;
 import elbar.company.learn_center_rest.entity.auth.user.AuthUser;
 import elbar.company.learn_center_rest.enums.auth.AuthTokenTypeEnum;
 import elbar.company.learn_center_rest.mapper.auth.token.AuthTokenMapper;
@@ -17,11 +18,14 @@ import elbar.company.learn_center_rest.response.Data;
 import elbar.company.learn_center_rest.service.AbstractService;
 import elbar.company.learn_center_rest.utils.jwt.JWTUtils;
 import elbar.company.learn_center_rest.validator.auth.token.AuthTokenValidator;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.webjars.NotFoundException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -52,22 +56,32 @@ public class AuthTokenServiceImpl extends AbstractService<AuthTokenValidator, Au
 
     @Override
     public ResponseEntity<Data<Void>> delete(UUID key) {
-        return null;
+        validator.validateKey(key);
+        Optional<AuthToken> optional = repository.getByCode(key);
+        if (optional.isEmpty()) {
+            throw new NotFoundException("Token not found");
+        }
+        repository.deleteByCode(key);
+        return new ResponseEntity<>(new Data<>(true), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<AuthTokenGetDTO>> get(UUID key) {
-        return null;
+        validator.validateKey(key);
+        return new ResponseEntity<>(new Data<>(mapper.fromGetDTO(repository.getByCode(key).orElseThrow(() -> new NotFoundException("Token not found")))), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<AuthTokenDetailDTO>> detail(UUID key) {
-        return null;
+        validator.validateKey(key);
+        return new ResponseEntity<>(new Data<>(mapper.fromDetailDTO(repository.getByCode(key).orElseThrow(() -> new NotFoundException("Token not found")))), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<List<AuthTokenGetDTO>>> list(AuthTokenCriteria criteria) {
-        return null;
+        PageRequest request = PageRequest.of(criteria.getPage(), criteria.getSize());
+        Page<AuthToken> all = repository.findAll(request);
+        return new ResponseEntity<>(new Data<>(mapper.fromGetListDTO(all.toList()), all.getSize()), HttpStatus.OK);
     }
 
     @Override

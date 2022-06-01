@@ -16,9 +16,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.webjars.NotFoundException;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -37,16 +39,25 @@ public class BlockReasonServiceImpl extends AbstractService<BlockReasonValidator
     @Override
     public ResponseEntity<Data<Void>> update(BlockReasonUpdateDTO DTO) {
         validator.validOnUpdate(DTO);
-        AuthBlockReason reason = repository.getByCode(DTO.getCode());
+        Optional<AuthBlockReason> optional = repository.getByCode(DTO.getCode());
+        if (optional.isEmpty()) {
+            throw new NotFoundException("Block Reason not found");
+        }
+        AuthBlockReason reason = optional.get();
         reason.setName(DTO.getName());
         reason.setPublished(DTO.isPublished());
         reason.setUpdatedAt(LocalDateTime.now());
+        repository.save(reason);
         return new ResponseEntity<>(new Data<>(true), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<Void>> delete(UUID key) {
         validator.validateKey(key);
+        Optional<AuthBlockReason> optional = repository.getByCode(key);
+        if (optional.isEmpty()) {
+            throw new NotFoundException("Block Reason not found");
+        }
         repository.deleteByCode(key);
         return new ResponseEntity<>(new Data<>(true), HttpStatus.OK);
     }
@@ -54,12 +65,12 @@ public class BlockReasonServiceImpl extends AbstractService<BlockReasonValidator
     @Override
     public ResponseEntity<Data<BlockReasonGetDTO>> get(UUID key) {
         validator.validateKey(key);
-        return new ResponseEntity<>(new Data<>(mapper.fromGetDTO(repository.getByCode(key))), HttpStatus.OK);
+        return new ResponseEntity<>(new Data<>(mapper.fromGetDTO(repository.getByCode(key).orElseThrow(() -> new NotFoundException("Block Reason not found")))), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<BlockReasonDetailDTO>> detail(UUID key) {
-        return new ResponseEntity<>(new Data<>(mapper.fromDetailDTO(repository.getByCode(key))), HttpStatus.OK);
+        return new ResponseEntity<>(new Data<>(mapper.fromDetailDTO(repository.getByCode(key).orElseThrow(() -> new NotFoundException("Block Reason not found")))), HttpStatus.OK);
     }
 
     @Override

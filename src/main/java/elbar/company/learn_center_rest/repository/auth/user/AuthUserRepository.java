@@ -1,5 +1,6 @@
 package elbar.company.learn_center_rest.repository.auth.user;
 
+import elbar.company.learn_center_rest.entity.auth.token.AuthToken;
 import elbar.company.learn_center_rest.entity.auth.user.AuthUser;
 import elbar.company.learn_center_rest.repository.BaseRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -19,4 +21,9 @@ public interface AuthUserRepository extends JpaRepository<AuthUser, Integer>, Ba
     List<String> getRolesByCode(UUID code);
 
     AuthUser findByCode(UUID code);
+
+    @Transactional
+    void deleteByCode(UUID key);
+
+    Optional<AuthUser> getByCode(UUID code);
 }

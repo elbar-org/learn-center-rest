@@ -20,7 +20,7 @@ public class AuthBlock extends Auditable {
     private Integer userId;
 
     @Column(name = "duration", nullable = false)
-    private LocalDateTime duration;
+    private String duration;
 
     @Column(name = "blocked_reason", nullable = false, length = 120)
     private String blockedReason;

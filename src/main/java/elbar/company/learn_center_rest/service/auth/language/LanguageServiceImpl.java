@@ -16,10 +16,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.webjars.NotFoundException;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -40,7 +42,11 @@ public class LanguageServiceImpl extends AbstractService<LanguageValidator, Lang
     @Override
     public ResponseEntity<Data<Void>> update(LanguageUpdateDTO DTO) {
         validator.validOnUpdate(DTO);
-        Language language = repository.getByCode(DTO.getCode());
+        Optional<Language> optional = repository.getByCode(DTO.getCode());
+        if (optional.isEmpty()) {
+            throw new NotFoundException("Language not found");
+        }
+        Language language = optional.get();
         language.setName(DTO.getName());
         language.setPublished(DTO.isPublished());
         language.setUpdatedAt(LocalDateTime.now());
@@ -51,6 +57,10 @@ public class LanguageServiceImpl extends AbstractService<LanguageValidator, Lang
     @Override
     public ResponseEntity<Data<Void>> delete(UUID key) {
         validator.validateKey(key);
+        Optional<Language> optional = repository.getByCode(key);
+        if (optional.isEmpty()) {
+            throw new NotFoundException("Language not found");
+        }
         repository.deleteByCode(key);
         return new ResponseEntity<>(new Data<>(true), HttpStatus.OK);
     }
@@ -58,13 +68,13 @@ public class LanguageServiceImpl extends AbstractService<LanguageValidator, Lang
     @Override
     public ResponseEntity<Data<LanguageGetDTO>> get(UUID key) {
         validator.validateKey(key);
-        return new ResponseEntity<>(new Data<>(mapper.fromGetDTO(repository.getByCode(key))), HttpStatus.OK);
+        return new ResponseEntity<>(new Data<>(mapper.fromGetDTO(repository.getByCode(key).orElseThrow(() -> new NotFoundException("Language not found")))), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<LanguageDetailDTO>> detail(UUID key) {
         validator.validateKey(key);
-        return new ResponseEntity<>(new Data<>(mapper.fromDetailDTO(repository.getByCode(key))), HttpStatus.OK);
+        return new ResponseEntity<>(new Data<>(mapper.fromDetailDTO(repository.getByCode(key).orElseThrow(() -> new NotFoundException("Language not found")))), HttpStatus.OK);
     }
 
     @Override

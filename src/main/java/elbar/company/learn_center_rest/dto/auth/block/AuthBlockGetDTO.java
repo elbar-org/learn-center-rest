@@ -15,6 +15,6 @@ import java.time.LocalDateTime;
 @ToString
 public class AuthBlockGetDTO extends GenericDTO {
     private Integer userId;
-    private LocalDateTime duration;
+    private String duration;
     private String blockedReason;
 }

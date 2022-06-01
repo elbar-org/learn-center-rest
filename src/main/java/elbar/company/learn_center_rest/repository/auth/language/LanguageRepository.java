@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -16,5 +17,5 @@ public interface LanguageRepository extends JpaRepository<Language, Integer>, Ba
     @Transactional
     void deleteByCode(UUID code);
 
-    Language getByCode(UUID code);
+    Optional<Language> getByCode(UUID code);
 }
