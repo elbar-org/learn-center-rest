@@ -1,6 +1,7 @@
 package elbar.company.learn_center_rest.criteria.auth.card_type;
 
 import elbar.company.learn_center_rest.criteria.GenericCriteria;
+import elbar.company.learn_center_rest.enums.auth.card_type.CardTypeFieldsEnum;
 import lombok.Getter;
 import lombok.Setter;
 import org.springdoc.api.annotations.ParameterObject;
@@ -10,7 +11,5 @@ import org.springframework.data.domain.Sort;
 @Setter
 @ParameterObject
 public class CardTypeCriteria extends GenericCriteria {
-    public CardTypeCriteria(Integer size, Integer page, Sort.Direction sort) {
-        super(size, page, sort);
-    }
+    private CardTypeFieldsEnum fieldsEnum;
 }

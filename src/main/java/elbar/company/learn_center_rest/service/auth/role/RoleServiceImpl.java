@@ -30,6 +30,7 @@ public class RoleServiceImpl extends AbstractService<RoleValidator, RoleMapper, 
 
     @Override
     public ResponseEntity<Data<Void>> create(RoleCreateDTO DTO) {
+        validator.validOnCreate(DTO);
         repository.save(mapper.toCreateDTO(DTO));
         return new ResponseEntity<>(new Data<>(true), HttpStatus.OK);
     }
@@ -64,8 +65,7 @@ public class RoleServiceImpl extends AbstractService<RoleValidator, RoleMapper, 
 
     @Override
     public ResponseEntity<Data<List<RoleGetDTO>>> list(RoleCriteria criteria) {
-        PageRequest request = PageRequest.of(criteria.getPage(), criteria.getSize());
-        Page<Role> all = repository.findAll(request);
-        return new ResponseEntity<>(new Data<>(mapper.fromGetListDTO(all.toList()), all.getSize()), HttpStatus.OK);
+        PageRequest request = PageRequest.of(criteria.getPage(), criteria.getSize(), criteria.getSort(), criteria.getFieldsEnum().getValue());
+        return new ResponseEntity<>(new Data<>(mapper.fromGetListDTO(repository.findAll(request).stream().toList()), repository.count()), HttpStatus.OK);
     }
 }

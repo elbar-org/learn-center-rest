@@ -66,7 +66,6 @@ public class TeacherSkillsServiceImpl extends AbstractService<TeacherSkillsValid
     @Override
     public ResponseEntity<Data<List<TeacherSkillsGetDTO>>> list(TeacherSkillsCriteria criteria) {
         PageRequest request = PageRequest.of(criteria.getPage(), criteria.getSize());
-        Page<TeacherSkills> all = repository.findAll(request);
-        return new ResponseEntity<>(new Data<>(mapper.fromGetListDTO(all.toList()), all.getSize()), HttpStatus.OK);
+        return new ResponseEntity<>(new Data<>(mapper.fromGetListDTO(repository.findAll(request).stream().toList()), repository.count()), HttpStatus.OK);
     }
 }

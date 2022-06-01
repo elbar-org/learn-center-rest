@@ -1,4 +1,4 @@
-package elbar.company.learn_center_rest.enums.auth;
+package elbar.company.learn_center_rest.enums.auth.token_type;
 
 import lombok.Getter;
 

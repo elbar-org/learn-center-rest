@@ -6,7 +6,7 @@ import elbar.company.learn_center_rest.dto.auth.token.AuthTokenCreateDTO;
 import elbar.company.learn_center_rest.dto.auth.token.AuthTokenGetDTO;
 import elbar.company.learn_center_rest.dto.auth.user.AuthUserLoginDTO;
 import elbar.company.learn_center_rest.entity.auth.session.SessionUser;
-import elbar.company.learn_center_rest.enums.auth.AuthTokenTypeEnum;
+import elbar.company.learn_center_rest.enums.auth.token_type.AuthTokenTypeEnum;
 import elbar.company.learn_center_rest.response.ApplicationError;
 import elbar.company.learn_center_rest.response.Data;
 import elbar.company.learn_center_rest.service.auth.token.AuthTokenService;

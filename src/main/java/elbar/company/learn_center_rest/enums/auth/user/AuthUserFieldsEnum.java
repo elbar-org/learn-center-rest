@@ -7,8 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum AuthUserFieldsEnum {
     USERNAME("username"),
-    email("email"),
-    language("language");
-
+    EMAIL("email"),
+    LANGUAGE("language");
     private final String value;
 }

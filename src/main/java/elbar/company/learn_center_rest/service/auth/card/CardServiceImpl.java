@@ -66,8 +66,7 @@ public class CardServiceImpl extends AbstractService<CardValidator, CardMapper, 
 
     @Override
     public ResponseEntity<Data<List<CardGetDTO>>> list(CardCriteria criteria) {
-        PageRequest request = PageRequest.of(criteria.getPage(), criteria.getSize());
-        Page<AuthCard> all = repository.findAll(request);
-        return new ResponseEntity<>(new Data<>(mapper.fromGetListDTO(all.toList()), all.getSize()), HttpStatus.OK);
+        PageRequest request = PageRequest.of(criteria.getPage(), criteria.getSize(), criteria.getSort(), criteria.getFieldsEnum().getValue());
+        return new ResponseEntity<>(new Data<>(mapper.fromGetListDTO(repository.findAll(request).stream().toList()), repository.count()), HttpStatus.OK);
     }
 }

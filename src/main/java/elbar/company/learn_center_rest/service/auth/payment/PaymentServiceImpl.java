@@ -46,7 +46,7 @@ public class PaymentServiceImpl extends AbstractService<PaymentValidator, Paymen
         validator.validateKey(key);
         Optional<AuthPayment> optional = repository.getByCode(key);
         if (optional.isEmpty()) {
-            throw new NotFoundException("Language not found");
+            throw new NotFoundException("Payment not found");
         }
         repository.deleteByCode(key);
         return new ResponseEntity<>(new Data<>(true), HttpStatus.OK);
@@ -67,7 +67,6 @@ public class PaymentServiceImpl extends AbstractService<PaymentValidator, Paymen
     @Override
     public ResponseEntity<Data<List<PaymentGetDTO>>> list(PaymentCriteria criteria) {
         PageRequest request = PageRequest.of(criteria.getPage(), criteria.getSize());
-        Page<AuthPayment> all = repository.findAll(request);
-        return new ResponseEntity<>(new Data<>(mapper.fromGetListDTO(all.toList()), all.getSize()), HttpStatus.OK);
+        return new ResponseEntity<>(new Data<>(mapper.fromGetListDTO(repository.findAll(request).stream().toList()), repository.count()), HttpStatus.OK);
     }
 }
