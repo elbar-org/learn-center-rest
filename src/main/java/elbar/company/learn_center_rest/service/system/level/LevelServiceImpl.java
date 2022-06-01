@@ -17,9 +17,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.webjars.NotFoundException;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -38,7 +40,11 @@ public class LevelServiceImpl extends AbstractService<LevelValidator, LevelMappe
     @Override
     public ResponseEntity<Data<Void>> update(LevelUpdateDTO DTO) {
         validator.validOnUpdate(DTO);
-        Level level = repository.getByCode(DTO.getCode());
+        Optional<Level> optional = repository.getByCode(DTO.getCode());
+        if (optional.isEmpty()) {
+            throw new NotFoundException("Level not found");
+        }
+        Level level = optional.get();
         level.setName(DTO.getName());
         level.setPublished(DTO.isPublished());
         level.setUpdatedAt(LocalDateTime.now());
@@ -49,6 +55,10 @@ public class LevelServiceImpl extends AbstractService<LevelValidator, LevelMappe
     @Override
     public ResponseEntity<Data<Void>> delete(UUID key) {
         validator.validateKey(key);
+        Optional<Level> optional = repository.getByCode(key);
+        if (optional.isEmpty()) {
+            throw new NotFoundException("Level not found");
+        }
         repository.deleteByCode(key);
         return new ResponseEntity<>(new Data<>(true), HttpStatus.OK);
     }
@@ -56,19 +66,18 @@ public class LevelServiceImpl extends AbstractService<LevelValidator, LevelMappe
     @Override
     public ResponseEntity<Data<LevelGetDTO>> get(UUID key) {
         validator.validateKey(key);
-        return new ResponseEntity<>(new Data<>(mapper.fromGetDTO(repository.getByCode(key))), HttpStatus.OK);
+        return new ResponseEntity<>(new Data<>(mapper.fromGetDTO(repository.getByCode(key).orElseThrow(() -> new NotFoundException("Level not found")))), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<LevelDetailDTO>> detail(UUID key) {
         validator.validateKey(key);
-        return new ResponseEntity<>(new Data<>(mapper.fromDetailDTO(repository.getByCode(key))), HttpStatus.OK);
+        return new ResponseEntity<>(new Data<>(mapper.fromDetailDTO(repository.getByCode(key).orElseThrow(() -> new NotFoundException("Level not found")))), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<List<LevelGetDTO>>> list(LevelCriteria criteria) {
-        PageRequest request = PageRequest.of(criteria.getPage(), criteria.getSize());
-        Page<Level> all = repository.findAll(request);
-        return new ResponseEntity<>(new Data<>(mapper.fromGetListDTO(all.toList()), all.getSize()), HttpStatus.OK);
+        PageRequest request = PageRequest.of(criteria.getPage(), criteria.getSize(), criteria.getSort(), criteria.getFieldsEnum().getValue());
+        return new ResponseEntity<>(new Data<>(mapper.fromGetListDTO(repository.findAll(request).stream().toList()), repository.count()), HttpStatus.OK);
     }
 }

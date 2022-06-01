@@ -17,10 +17,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.webjars.NotFoundException;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -44,6 +46,10 @@ public class FaqServiceImpl extends AbstractService<FaqValidator, FaqMapper, Faq
     @Override
     public ResponseEntity<Data<Void>> delete(UUID key) {
         validator.validateKey(key);
+        Optional<Faq> optional = repository.getByCode(key);
+        if (optional.isEmpty()) {
+            throw new NotFoundException("Faq not found");
+        }
         repository.deleteByCode(key);
         return new ResponseEntity<>(new Data<>(true), HttpStatus.OK);
     }
@@ -51,19 +57,18 @@ public class FaqServiceImpl extends AbstractService<FaqValidator, FaqMapper, Faq
     @Override
     public ResponseEntity<Data<FaqGetDTO>> get(UUID key) {
         validator.validateKey(key);
-        return new ResponseEntity<>(new Data<>(mapper.fromGetDTO(repository.getByCode(key))), HttpStatus.OK);
+        return new ResponseEntity<>(new Data<>(mapper.fromGetDTO(repository.getByCode(key).orElseThrow(() -> new NotFoundException("Faq not found")))), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<FaqDetailDTO>> detail(UUID key) {
         validator.validateKey(key);
-        return new ResponseEntity<>(new Data<>(mapper.fromDetailDTO(repository.getByCode(key))), HttpStatus.OK);
+        return new ResponseEntity<>(new Data<>(mapper.fromDetailDTO(repository.getByCode(key).orElseThrow(() -> new NotFoundException("Faq not found")))), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<List<FaqGetDTO>>> list(FaqCriteria criteria) {
         PageRequest request = PageRequest.of(criteria.getPage(), criteria.getSize());
-        Page<Faq> all = repository.findAll(request);
-        return new ResponseEntity<>(new Data<>(mapper.fromGetListDTO(all.toList()), all.getSize()), HttpStatus.OK);
+        return new ResponseEntity<>(new Data<>(mapper.fromGetListDTO(repository.findAll(request).stream().toList()), repository.count()), HttpStatus.OK);
     }
 }

@@ -1,6 +1,7 @@
 package elbar.company.learn_center_rest.criteria.system.tag;
 
 import elbar.company.learn_center_rest.criteria.GenericCriteria;
+import elbar.company.learn_center_rest.enums.system.tag.TagFieldsEnum;
 import lombok.Getter;
 import lombok.Setter;
 import org.springdoc.api.annotations.ParameterObject;
@@ -10,7 +11,5 @@ import org.springframework.data.domain.Sort;
 @Setter
 @ParameterObject
 public class TagCriteria extends GenericCriteria {
-    public TagCriteria(Integer size, Integer page, Sort.Direction sort) {
-        super(size, page, sort);
-    }
+    private TagFieldsEnum fieldsEnum;
 }
