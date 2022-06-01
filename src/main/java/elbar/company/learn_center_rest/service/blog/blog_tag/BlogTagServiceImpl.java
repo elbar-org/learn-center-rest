@@ -5,21 +5,20 @@ import elbar.company.learn_center_rest.dto.blog.blog_tag.BlogTagCreateDTO;
 import elbar.company.learn_center_rest.dto.blog.blog_tag.BlogTagDetailDTO;
 import elbar.company.learn_center_rest.dto.blog.blog_tag.BlogTagGetDTO;
 import elbar.company.learn_center_rest.dto.blog.blog_tag.BlogTagUpdateDTO;
-import elbar.company.learn_center_rest.entity.blog.blog_rating.BlogRating;
 import elbar.company.learn_center_rest.entity.blog.blog_tag.BlogTag;
 import elbar.company.learn_center_rest.mapper.blog.blog_tag.BlogTagMapper;
 import elbar.company.learn_center_rest.repository.blog.blog_tag.BlogTagRepository;
 import elbar.company.learn_center_rest.response.Data;
 import elbar.company.learn_center_rest.service.AbstractService;
 import elbar.company.learn_center_rest.validator.blog.blog_tag.BlogTagValidator;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.webjars.NotFoundException;
 
-import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -43,6 +42,10 @@ public class BlogTagServiceImpl extends AbstractService<BlogTagValidator, BlogTa
     @Override
     public ResponseEntity<Data<Void>> delete(UUID key) {
         validator.validateKey(key);
+        Optional<BlogTag> optional = repository.getByCode(key);
+        if (optional.isEmpty()) {
+            throw new NotFoundException("Blog Tag not found");
+        }
         repository.deleteByCode(key);
         return new ResponseEntity<>(new Data<>(true), HttpStatus.OK);
     }
@@ -50,19 +53,18 @@ public class BlogTagServiceImpl extends AbstractService<BlogTagValidator, BlogTa
     @Override
     public ResponseEntity<Data<BlogTagGetDTO>> get(UUID key) {
         validator.validateKey(key);
-        return new ResponseEntity<>(new Data<>(mapper.fromGetDTO(repository.getByCode(key))), HttpStatus.OK);
+        return new ResponseEntity<>(new Data<>(mapper.fromGetDTO(repository.getByCode(key).orElseThrow(() -> new NotFoundException("Blog Tag not found")))), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<BlogTagDetailDTO>> detail(UUID key) {
         validator.validateKey(key);
-        return new ResponseEntity<>(new Data<>(mapper.fromDetailDTO(repository.getByCode(key))), HttpStatus.OK);
+        return new ResponseEntity<>(new Data<>(mapper.fromDetailDTO(repository.getByCode(key).orElseThrow(() -> new NotFoundException("Blog Tag not found")))), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<List<BlogTagGetDTO>>> list(BlogTagCriteria criteria) {
         PageRequest request = PageRequest.of(criteria.getPage(), criteria.getSize());
-        Page<BlogTag> all = repository.findAll(request);
-        return new ResponseEntity<>(new Data<>(mapper.fromGetListDTO(all.toList()), all.getSize()), HttpStatus.OK);
+        return new ResponseEntity<>(new Data<>(mapper.fromGetListDTO(repository.findAll(request).stream().toList()), repository.count()), HttpStatus.OK);
     }
 }

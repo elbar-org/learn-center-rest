@@ -66,7 +66,6 @@ public class BlogCommentServiceImpl extends AbstractService<BlogCommentValidator
     @Override
     public ResponseEntity<Data<List<BlogCommentGetDTO>>> list(BlogCommentCriteria criteria) {
         PageRequest request = PageRequest.of(criteria.getPage(), criteria.getSize());
-        Page<BlogComment> all = repository.findAll(request);
-        return new ResponseEntity<>(new Data<>(mapper.fromGetListDTO(all.toList()), all.getSize()), HttpStatus.OK);
+        return new ResponseEntity<>(new Data<>(mapper.fromGetListDTO(repository.findAll(request).stream().toList()), repository.count()), HttpStatus.OK);
     }
 }

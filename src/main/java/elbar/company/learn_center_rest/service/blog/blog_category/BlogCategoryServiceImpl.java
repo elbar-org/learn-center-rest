@@ -16,10 +16,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.webjars.NotFoundException;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -39,7 +41,11 @@ public class BlogCategoryServiceImpl extends AbstractService<BlogCategoryValidat
     @Override
     public ResponseEntity<Data<Void>> update(BlogCategoryUpdateDTO DTO) {
         validator.validOnUpdate(DTO);
-        BlogCategory category = repository.getByCode(DTO.getCode());
+        Optional<BlogCategory> optional = repository.getByCode(DTO.getCode());
+        if (optional.isEmpty()) {
+            throw new NotFoundException("Blog Category not found");
+        }
+        BlogCategory category = optional.get();
         category.setTitle(DTO.getTitle());
         category.setDescription(DTO.getDescription());
         category.setPublished(DTO.getIsPublished());
@@ -51,6 +57,10 @@ public class BlogCategoryServiceImpl extends AbstractService<BlogCategoryValidat
     @Override
     public ResponseEntity<Data<Void>> delete(UUID key) {
         validator.validateKey(key);
+        Optional<BlogCategory> optional = repository.getByCode(key);
+        if (optional.isEmpty()) {
+            throw new NotFoundException("Blog Category not found");
+        }
         repository.deleteByCode(key);
         return new ResponseEntity<>(new Data<>(true), HttpStatus.OK);
     }
@@ -58,19 +68,18 @@ public class BlogCategoryServiceImpl extends AbstractService<BlogCategoryValidat
     @Override
     public ResponseEntity<Data<BlogCategoryGetDTO>> get(UUID key) {
         validator.validateKey(key);
-        return new ResponseEntity<>(new Data<>(mapper.fromGetDTO(repository.getByCode(key))), HttpStatus.OK);
+        return new ResponseEntity<>(new Data<>(mapper.fromGetDTO(repository.getByCode(key).orElseThrow(() -> new NotFoundException("Blog Category not found")))), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<BlogCategoryDetailDTO>> detail(UUID key) {
         validator.validateKey(key);
-        return new ResponseEntity<>(new Data<>(mapper.fromDetailDTO(repository.getByCode(key))), HttpStatus.OK);
+        return new ResponseEntity<>(new Data<>(mapper.fromDetailDTO(repository.getByCode(key).orElseThrow(() -> new NotFoundException("Blog Category not found")))), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<List<BlogCategoryGetDTO>>> list(BlogCategoryCriteria criteria) {
-        PageRequest request = PageRequest.of(criteria.getPage(), criteria.getSize());
-        Page<BlogCategory> all = repository.findAll(request);
-        return new ResponseEntity<>(new Data<>(mapper.fromGetListDTO(all.toList()), all.getSize()), HttpStatus.OK);
+        PageRequest request = PageRequest.of(criteria.getPage(), criteria.getSize(), criteria.getSort(), criteria.getFieldsEnum().getValue());
+        return new ResponseEntity<>(new Data<>(mapper.fromGetListDTO(repository.findAll(request).stream().toList()), repository.count()), HttpStatus.OK);
     }
 }

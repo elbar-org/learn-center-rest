@@ -16,9 +16,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.webjars.NotFoundException;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -37,7 +39,11 @@ public class BlogRatingServiceImpl extends AbstractService<BlogRatingValidator, 
     @Override
     public ResponseEntity<Data<Void>> update(BlogRatingUpdateDTO DTO) {
         validator.validOnUpdate(DTO);
-        BlogRating rating = repository.getByCode(DTO.getCode());
+        Optional<BlogRating> optional = repository.getByCode(DTO.getCode());
+        if (optional.isEmpty()) {
+            throw new NotFoundException("Blog Rating not found");
+        }
+        BlogRating rating = optional.get();
         rating.setStars(DTO.getStars());
         rating.setViews(DTO.getViews());
         rating.setUpdatedAt(LocalDateTime.now());
@@ -48,6 +54,10 @@ public class BlogRatingServiceImpl extends AbstractService<BlogRatingValidator, 
     @Override
     public ResponseEntity<Data<Void>> delete(UUID key) {
         validator.validateKey(key);
+        Optional<BlogRating> optional = repository.getByCode(key);
+        if (optional.isEmpty()) {
+            throw new NotFoundException("Blog Rating not found");
+        }
         repository.deleteByCode(key);
         return new ResponseEntity<>(new Data<>(true), HttpStatus.OK);
     }
@@ -55,19 +65,18 @@ public class BlogRatingServiceImpl extends AbstractService<BlogRatingValidator, 
     @Override
     public ResponseEntity<Data<BlogRatingGetDTO>> get(UUID key) {
         validator.validateKey(key);
-        return new ResponseEntity<>(new Data<>(mapper.fromGetDTO(repository.getByCode(key))), HttpStatus.OK);
+        return new ResponseEntity<>(new Data<>(mapper.fromGetDTO(repository.getByCode(key).orElseThrow(() -> new NotFoundException("Blog Rating not found")))), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<BlogRatingDetailDTO>> detail(UUID key) {
         validator.validateKey(key);
-        return new ResponseEntity<>(new Data<>(mapper.fromDetailDTO(repository.getByCode(key))), HttpStatus.OK);
+        return new ResponseEntity<>(new Data<>(mapper.fromDetailDTO(repository.getByCode(key).orElseThrow(() -> new NotFoundException("Blog Rating not found")))), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<List<BlogRatingGetDTO>>> list(BlogRatingCriteria criteria) {
         PageRequest request = PageRequest.of(criteria.getPage(), criteria.getSize());
-        Page<BlogRating> all = repository.findAll(request);
-        return new ResponseEntity<>(new Data<>(mapper.fromGetListDTO(all.toList()), all.getSize()), HttpStatus.OK);
+        return new ResponseEntity<>(new Data<>(mapper.fromGetListDTO(repository.findAll(request).stream().toList()), repository.count()), HttpStatus.OK);
     }
 }
