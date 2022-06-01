@@ -45,6 +45,7 @@ public class AuthTokenServiceImpl extends AbstractService<AuthTokenValidator, Au
 
     @Override
     public ResponseEntity<Data<Void>> create(AuthTokenCreateDTO DTO) {
+        validator.validOnCreate(DTO);
         repository.save(mapper.toCreateDTO(DTO));
         return new ResponseEntity<>(new Data<>(true), HttpStatus.CREATED);
     }
@@ -80,8 +81,7 @@ public class AuthTokenServiceImpl extends AbstractService<AuthTokenValidator, Au
     @Override
     public ResponseEntity<Data<List<AuthTokenGetDTO>>> list(AuthTokenCriteria criteria) {
         PageRequest request = PageRequest.of(criteria.getPage(), criteria.getSize());
-        Page<AuthToken> all = repository.findAll(request);
-        return new ResponseEntity<>(new Data<>(mapper.fromGetListDTO(all.toList()), all.getSize()), HttpStatus.OK);
+        return new ResponseEntity<>(new Data<>(mapper.fromGetListDTO(repository.findAll(request).stream().toList()), repository.count()), HttpStatus.OK);
     }
 
     @Override

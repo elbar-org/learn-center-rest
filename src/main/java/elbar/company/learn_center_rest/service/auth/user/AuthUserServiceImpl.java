@@ -37,6 +37,7 @@ public class AuthUserServiceImpl extends AbstractService<AuthUserValidator, Auth
 
     @Override
     public ResponseEntity<Data<Void>> create(AuthUserCreateDTO DTO) {
+        validator.validOnCreate(DTO);
         PasswordEncoderConfigurer encoderConfigurer = new PasswordEncoderConfigurer();
         AuthUser user = mapper.toCreateDTO(DTO);
         user.setPassword(encoderConfigurer.encoder().encode(user.getPassword()));
@@ -74,7 +75,7 @@ public class AuthUserServiceImpl extends AbstractService<AuthUserValidator, Auth
     @Override
     public ResponseEntity<Data<AuthUserGetDTO>> get(UUID key) {
         validator.validateKey(key);
-        return new ResponseEntity<>(new Data<>(mapper.fromGetDTO(repository.getByCode(key).orElseThrow(() -> new NotFoundException("Token not found")))), HttpStatus.OK);
+        return new ResponseEntity<>(new Data<>(mapper.fromGetDTO(repository.getByCode(key).orElseThrow(() -> new NotFoundException("Auth User not found")))), HttpStatus.OK);
     }
 
     @Override
@@ -85,9 +86,8 @@ public class AuthUserServiceImpl extends AbstractService<AuthUserValidator, Auth
 
     @Override
     public ResponseEntity<Data<List<AuthUserGetDTO>>> list(AuthUserCriteria criteria) {
-        PageRequest request = PageRequest.of(criteria.getPage(), criteria.getSize());
-        Page<AuthUser> all = repository.findAll(request);
-        return new ResponseEntity<>(new Data<>(mapper.fromGetListDTO(all.toList()), all.getSize()), HttpStatus.OK);
+        PageRequest request = PageRequest.of(criteria.getPage(), criteria.getSize(), criteria.getSort(), criteria.getFieldsEnum().getValue());
+        return new ResponseEntity<>(new Data<>(mapper.fromGetListDTO(repository.findAll(request).stream().toList()), repository.count()), HttpStatus.OK);
     }
 
     @Override

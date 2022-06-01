@@ -26,16 +26,19 @@ public class TeacherControllerImpl extends AbstractController<TeacherServiceImpl
 
     @Override
     public ResponseEntity<Data<String>> create(TeacherCreateDTO DTO) {
+        service.create(DTO);
         return new ResponseEntity<>(new Data<>("Successfully created - Teacher"), HttpStatus.CREATED);
     }
 
     @Override
     public ResponseEntity<Data<String>> update(TeacherUpdateDTO DTO) {
+        service.update(DTO);
         return new ResponseEntity<>(new Data<>("Successfully updated - Teacher"), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<String>> delete(UUID code) {
+        service.delete(code);
         return new ResponseEntity<>(new Data<>("Successfully deleted - Teacher"), HttpStatus.OK);
     }
 
