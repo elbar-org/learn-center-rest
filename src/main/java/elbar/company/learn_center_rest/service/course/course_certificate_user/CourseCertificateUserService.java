@@ -1,0 +1,14 @@
+package elbar.company.learn_center_rest.service.course.course_certificate_user;
+
+import elbar.company.learn_center_rest.criteria.course.course_certificate_user.CourseCertificateUserCriteria;
+import elbar.company.learn_center_rest.dto.course.course_certificate_user.CourseCertificateUserCreateDTO;
+import elbar.company.learn_center_rest.dto.course.course_certificate_user.CourseCertificateUserDetailDTO;
+import elbar.company.learn_center_rest.dto.course.course_certificate_user.CourseCertificateUserGetDTO;
+import elbar.company.learn_center_rest.dto.course.course_certificate_user.CourseCertificateUserUpdateDTO;
+import elbar.company.learn_center_rest.service.GenericCUDService;
+import elbar.company.learn_center_rest.service.GenericGLDService;
+
+import java.util.UUID;
+
+public interface CourseCertificateUserService extends GenericCUDService<CourseCertificateUserCreateDTO, CourseCertificateUserUpdateDTO, UUID>, GenericGLDService<CourseCertificateUserGetDTO, CourseCertificateUserDetailDTO, CourseCertificateUserCriteria, UUID> {
+}

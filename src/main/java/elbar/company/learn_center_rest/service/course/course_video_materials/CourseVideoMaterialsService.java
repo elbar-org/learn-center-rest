@@ -1,0 +1,14 @@
+package elbar.company.learn_center_rest.service.course.course_video_materials;
+
+import elbar.company.learn_center_rest.criteria.course.course_video_materials.CourseVideoMaterialsCriteria;
+import elbar.company.learn_center_rest.dto.course.course_video_materials.CourseVideoMaterialsCreateDTO;
+import elbar.company.learn_center_rest.dto.course.course_video_materials.CourseVideoMaterialsDetailDTO;
+import elbar.company.learn_center_rest.dto.course.course_video_materials.CourseVideoMaterialsGetDTO;
+import elbar.company.learn_center_rest.dto.course.course_video_materials.CourseVideoMaterialsUpdateDTO;
+import elbar.company.learn_center_rest.service.GenericCUDService;
+import elbar.company.learn_center_rest.service.GenericGLDService;
+
+import java.util.UUID;
+
+public interface CourseVideoMaterialsService extends GenericCUDService<CourseVideoMaterialsCreateDTO, CourseVideoMaterialsUpdateDTO, UUID>, GenericGLDService<CourseVideoMaterialsGetDTO, CourseVideoMaterialsDetailDTO, CourseVideoMaterialsCriteria, UUID> {
+}

@@ -1,0 +1,14 @@
+package elbar.company.learn_center_rest.controller.course.course_video_materials;
+
+import elbar.company.learn_center_rest.controller.GenericCUDController;
+import elbar.company.learn_center_rest.controller.GenericGLDController;
+import elbar.company.learn_center_rest.criteria.course.course_video_materials.CourseVideoMaterialsCriteria;
+import elbar.company.learn_center_rest.dto.course.course_video_materials.CourseVideoMaterialsCreateDTO;
+import elbar.company.learn_center_rest.dto.course.course_video_materials.CourseVideoMaterialsDetailDTO;
+import elbar.company.learn_center_rest.dto.course.course_video_materials.CourseVideoMaterialsGetDTO;
+import elbar.company.learn_center_rest.dto.course.course_video_materials.CourseVideoMaterialsUpdateDTO;
+
+import java.util.UUID;
+
+public interface CourseVideoMaterialsController extends GenericCUDController<CourseVideoMaterialsCreateDTO, CourseVideoMaterialsUpdateDTO, UUID>, GenericGLDController<CourseVideoMaterialsGetDTO, CourseVideoMaterialsDetailDTO, CourseVideoMaterialsCriteria, UUID> {
+}
